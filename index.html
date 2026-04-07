@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WFM Planner — BPO Multi-Location</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#f0f2f5; --white:#ffffff; --panel:#f8f9fb;
+  --border:#e2e5ea; --border2:#c8cdd6;
+  --ink:#111827; --ink2:#374151; --ink3:#6b7280; --ink4:#9ca3af;
+  --blue:#2563eb; --blue-l:#dbeafe; --blue-b:#93c5fd;
+  --orange:#ea580c; --orange-l:#fff7ed; --orange-b:#fed7aa;
+  --teal:#0f766e; --teal-l:#f0fdfa; --teal-b:#99f6e4;
+  --violet:#7c3aed; --violet-l:#f5f3ff; --violet-b:#ddd6fe;
+  --sky:#0284c7; --sky-l:#f0f9ff; --sky-b:#bae6fd;
+  --green:#16a34a; --amber:#d97706; --red:#dc2626;
+  --phone-c:#0369a1; --chat-c:#7c3aed; --email-c:#047857;
+  --c1:var(--blue);   --c1l:var(--blue-l);   --c1b:var(--blue-b);
+  --c2:var(--orange); --c2l:var(--orange-l);  --c2b:var(--orange-b);
+  --c3:var(--teal);   --c3l:var(--teal-l);    --c3b:var(--teal-b);
+  --c4:var(--violet); --c4l:var(--violet-l);  --c4b:var(--violet-b);
+  --c5:var(--sky);    --c5l:var(--sky-l);     --c5b:var(--sky-b);
+  --header-h:58px; --tabbar-h:48px; --footer-h:64px;
+  --font:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  --sh: 0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --shm:0 4px 16px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.04);
+  --shl:0 8px 32px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.04);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:13px}
+body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+
+/* ── HEADER ─────────────────────────────────────────── */
+.header{height:var(--header-h);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:20px;position:sticky;top:0;z-index:200;box-shadow:var(--sh)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-text{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.2px}
+.logo-sub{font-size:11px;color:var(--ink4);font-weight:400;margin-top:1px}
+.h-sep{width:1px;height:28px;background:var(--border);flex-shrink:0}
+.hctrl{display:flex;align-items:center;gap:6px}
+.hctrl-label{font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.3px;white-space:nowrap}
+.hselect{appearance:none;-webkit-appearance:none;background:var(--panel);border:1px solid var(--border);color:var(--ink);font-family:var(--font);font-size:12px;font-weight:500;padding:5px 28px 5px 10px;border-radius:7px;outline:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:border-color .15s}
+.hselect:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.08)}
+.shrink-pill{display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:11px;color:var(--ink3)}
+.shrink-pill strong{color:var(--amber);font-weight:700;font-family:var(--mono)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+
+/* ── TAB BAR ─────────────────────────────────────────── */
+.tabbar{height:var(--tabbar-h);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 24px;position:sticky;top:var(--header-h);z-index:190}
+.tab-btn{display:flex;align-items:center;gap:8px;padding:0 18px;border:none;background:transparent;font-family:var(--font);font-size:12px;font-weight:600;color:var(--ink3);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.tab-btn:hover{color:var(--ink2)}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--ink)}
+.tab-btn.active.ph{color:var(--phone-c);border-bottom-color:var(--phone-c)}
+.tab-btn.active.ch{color:var(--chat-c);border-bottom-color:var(--chat-c)}
+.tab-btn.active.em{color:var(--email-c);border-bottom-color:var(--email-c)}
+.tab-pip{font-family:var(--mono);font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px;background:var(--page);color:var(--ink3);transition:all .15s}
+.tab-btn.active.ph .tab-pip{background:#e0f2fe;color:var(--phone-c)}
+.tab-btn.active.ch .tab-pip{background:#ede9fe;color:var(--chat-c)}
+.tab-btn.active.em .tab-pip{background:#d1fae5;color:var(--email-c)}
+.tabbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.vol-toggle{display:flex;background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:3px;gap:2px}
+.vt-btn{padding:4px 13px;border-radius:5px;border:none;background:transparent;font-family:var(--font);font-size:11px;font-weight:600;color:var(--ink3);cursor:pointer;transition:all .15s}
+.vt-btn.active{background:var(--white);color:var(--ink);box-shadow:var(--sh)}
+
+/* ── GLOBAL INPUT STRIP ──────────────────────────────── */
+.global-strip{
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:14px 24px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.gs-label{font-size:12px;font-weight:600;color:var(--ink2);white-space:nowrap}
+.gs-fields{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.gs-field{display:flex;align-items:center;gap:8px}
+.gs-field label{font-size:11px;font-weight:600;color:var(--ink3);white-space:nowrap}
+.gs-input{
+  background:var(--panel);border:1.5px solid var(--border2);border-radius:8px;
+  font-family:var(--mono);font-size:16px;font-weight:700;color:var(--ink);
+  padding:8px 12px;outline:none;-moz-appearance:textfield;
+  width:140px;text-align:right;transition:border-color .15s,box-shadow .15s;
+}
+.gs-input::-webkit-outer-spin-button,.gs-input::-webkit-inner-spin-button{-webkit-appearance:none}
+.gs-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.gs-unit{font-size:11px;font-weight:600;color:var(--ink4)}
+.gs-arrow{font-size:16px;color:var(--border2);flex-shrink:0}
+.gs-info{font-size:11px;color:var(--ink4);font-style:italic}
+
+/* Split % bar + disclaimer */
+.split-pct-strip{
+  background:#fffbeb;
+  border-bottom:1px solid #fde68a;
+  padding:12px 24px;
+  display:none;
+}
+.split-pct-strip.show{display:block}
+.sps-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:10px}
+.sps-label{font-size:11px;font-weight:600;color:#92400e}
+.sps-fields{display:flex;gap:10px;flex-wrap:wrap}
+.sps-loc{display:flex;align-items:center;gap:5px}
+.sps-loc-name{font-size:11px;font-weight:600;white-space:nowrap}
+.sps-loc-input{
+  width:58px;background:var(--white);border:1.5px solid var(--border2);
+  border-radius:6px;font-family:var(--mono);font-size:13px;font-weight:700;
+  color:var(--ink);padding:4px 6px;outline:none;-moz-appearance:textfield;
+  text-align:right;transition:border-color .15s;
+}
+.sps-loc-input::-webkit-outer-spin-button,.sps-loc-input::-webkit-inner-spin-button{-webkit-appearance:none}
+.sps-pct-sym{font-size:11px;color:var(--ink4)}
+.sps-total{display:flex;align-items:center;gap:8px;margin-left:auto}
+.sps-total-label{font-size:11px;color:#92400e;font-weight:500}
+.sps-total-val{font-family:var(--mono);font-size:14px;font-weight:700}
+.sps-total-val.ok{color:var(--green)}
+.sps-total-val.warn{color:var(--red)}
+.sps-bar{height:6px;border-radius:3px;background:var(--border);overflow:hidden;display:flex;margin-top:0}
+.sps-bar-seg{height:100%;transition:width .3s}
+.sps-disclaimer{display:none;margin-top:8px;padding:8px 12px;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;font-size:11px;color:var(--red);font-weight:500;align-items:center;gap:6px}
+.sps-disclaimer.show{display:flex}
+
+/* ── CHANNEL VIEWS ───────────────────────────────────── */
+.ch-view{display:none;flex:1;flex-direction:column;min-height:0}
+.ch-view.active{display:flex}
+.summary-view{display:none;flex:1;overflow-y:auto;padding:24px}
+.summary-view.active{display:block}
+.cards-scroll{flex:1;overflow-y:auto;overflow-x:auto;padding:20px 24px;display:flex;gap:14px;align-items:flex-start}
+
+/* ── LOCATION CARD ───────────────────────────────────── */
+.loc-card{flex:1;min-width:200px;max-width:250px;background:var(--white);border:1px solid var(--border);border-radius:12px;box-shadow:var(--sh);display:flex;flex-direction:column;overflow:hidden;transition:box-shadow .2s}
+.loc-card:hover{box-shadow:var(--shm)}
+.loc-card.c1{border-top:3px solid var(--c1)}
+.loc-card.c2{border-top:3px solid var(--c2)}
+.loc-card.c3{border-top:3px solid var(--c3)}
+.loc-card.c4{border-top:3px solid var(--c4)}
+.loc-card.c5{border-top:3px solid var(--c5)}
+
+/* Card header */
+.card-head{padding:14px 16px 12px;border-bottom:1px solid var(--border);background:var(--panel)}
+.card-loc-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.card-flag{font-size:18px;line-height:1;flex-shrink:0}
+.card-name-input{border:none;background:transparent;font-family:var(--font);font-size:13px;font-weight:700;color:var(--ink);outline:none;width:100%;padding:0;min-width:0}
+.card-name-input:focus{text-decoration:underline;text-underline-offset:2px}
+.card-country-select{display:block;width:100%;border:none;background:transparent;font-family:var(--font);font-size:11px;color:var(--ink3);font-weight:500;outline:none;cursor:pointer;-webkit-appearance:none;padding:0;margin-bottom:3px}
+.fte-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;font-family:var(--mono);padding:2px 8px;border-radius:20px;margin-top:3px}
+.c1 .fte-badge{background:var(--c1l);color:var(--c1);border:1px solid var(--c1b)}
+.c2 .fte-badge{background:var(--c2l);color:var(--c2);border:1px solid var(--c2b)}
+.c3 .fte-badge{background:var(--c3l);color:var(--c3);border:1px solid var(--c3b)}
+.c4 .fte-badge{background:var(--c4l);color:var(--c4);border:1px solid var(--c4b)}
+.c5 .fte-badge{background:var(--c5l);color:var(--c5);border:1px solid var(--c5b)}
+/* Volume display row inside card (read-only in equal mode) */
+.card-vol-display{padding:10px 16px;border-bottom:1px solid var(--border);background:var(--white);display:flex;justify-content:space-between;align-items:center}
+.cvd-label{font-size:11px;color:var(--ink4);font-weight:500}
+.cvd-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ink3)}
+
+/* Field rows */
+.card-fields{flex:1}
+.field-row{display:flex;align-items:center;justify-content:space-between;padding:0 14px;min-height:48px;border-bottom:1px solid var(--border);gap:10px}
+.field-row:last-child{border-bottom:none}
+.field-label{font-size:11px;font-weight:500;color:var(--ink3);white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:3px}
+.field-right{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.field-input{width:90px;background:var(--panel);border:1.5px solid var(--border);border-radius:7px;font-family:var(--mono);font-size:14px;font-weight:600;color:var(--ink);padding:6px 9px;outline:none;-moz-appearance:textfield;text-align:right;transition:border-color .15s,box-shadow .15s}
+.field-input::-webkit-outer-spin-button,.field-input::-webkit-inner-spin-button{-webkit-appearance:none}
+.loc-card.c1 .field-input:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.loc-card.c2 .field-input:focus{border-color:var(--c2);box-shadow:0 0 0 3px rgba(234,88,12,.1)}
+.loc-card.c3 .field-input:focus{border-color:var(--c3);box-shadow:0 0 0 3px rgba(15,118,110,.1)}
+.loc-card.c4 .field-input:focus{border-color:var(--c4);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+.loc-card.c5 .field-input:focus{border-color:var(--c5);box-shadow:0 0 0 3px rgba(2,132,199,.1)}
+.field-unit{font-size:10px;color:var(--ink4);font-weight:500;white-space:nowrap}
+
+/* Shrinkage block */
+.shrink-block{padding:12px 14px;border-bottom:1px solid var(--border);background:var(--panel)}
+.shrink-block-title{font-size:10px;font-weight:700;color:var(--ink4);letter-spacing:.6px;text-transform:uppercase;margin-bottom:10px}
+.shrink-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.shrink-label{font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px}
+.shrink-label.util{color:#3b82f6}
+.shrink-label.avail{color:#8b5cf6}
+.shrink-input-wrap{display:flex;align-items:center;gap:4px}
+.shrink-input{width:50px;background:var(--white);border:1.5px solid var(--border);border-radius:6px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ink);padding:4px 8px;outline:none;-moz-appearance:textfield;text-align:right;transition:border-color .15s}
+.shrink-input::-webkit-outer-spin-button,.shrink-input::-webkit-inner-spin-button{-webkit-appearance:none}
+.shrink-input:focus{border-color:var(--border2)}
+.shrink-pct{font-size:11px;color:var(--ink4);width:10px}
+.shrink-bar{height:5px;border-radius:3px;background:var(--border);overflow:hidden;position:relative;margin-bottom:7px}
+.shrink-bar-u{position:absolute;left:0;top:0;height:100%;background:#3b82f6;border-radius:3px;transition:width .3s}
+.shrink-bar-a{position:absolute;top:0;height:100%;background:#8b5cf6;border-radius:0 3px 3px 0;transition:width .3s,left .3s}
+.shrink-total-row{display:flex;align-items:center;justify-content:space-between}
+.shrink-total-label{font-size:10px;font-weight:600;color:var(--ink3)}
+.shrink-total-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber)}
+
+/* Result block */
+.result-block{background:var(--white);border-top:2px solid var(--border);padding:16px}
+.result-step{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;margin-bottom:4px}
+.rs-label{color:var(--ink4);font-weight:500}
+.rs-val{font-family:var(--mono);font-weight:600;color:var(--ink3);font-size:11px}
+.result-divider{height:1px;background:var(--border);margin:10px 0 8px}
+.rp-label{font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
+.rp-fte{font-family:var(--mono);font-size:28px;font-weight:700;line-height:1}
+.loc-card.c1 .rp-fte{color:var(--c1)}
+.loc-card.c2 .rp-fte{color:var(--c2)}
+.loc-card.c3 .rp-fte{color:var(--c3)}
+.loc-card.c4 .rp-fte{color:var(--c4)}
+.loc-card.c5 .rp-fte{color:var(--c5)}
+
+/* Tooltip */
+.tt{display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;background:var(--border);color:var(--ink4);font-size:9px;font-weight:700;cursor:help;position:relative}
+.tt:hover::after{content:attr(data-t);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:10px;padding:6px 10px;border-radius:7px;white-space:pre-wrap;z-index:999;pointer-events:none;max-width:210px;line-height:1.5;font-family:var(--font);font-weight:400;box-shadow:var(--shl)}
+
+/* Footer - Updated Styles */
+.footer{background:var(--ink);height:var(--footer-h);display:flex;align-items:stretch;border-top:1px solid #1f2937;flex-shrink:0}
+.footer-seg{display:flex;flex-direction:column;justify-content:center;padding:0 28px;border-right:1px solid #1f2937}
+.footer-seg:last-child{border-right:none}
+/* White color for Total FTE section labels and values */
+.fs-label{font-size:11px;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px}
+.fs-val{font-family:var(--mono);font-size:23px;font-weight:700;color:#fff;line-height:1}
+.fs-val.white{color:#fff} 
+.fs-sub{font-size:11px;color:#fff;font-weight:700;margin-top:2px}
+/* Other channel labels remain readable */
+.footer-ch{display:flex;gap:20px;align-items:center}
+.fch{display:flex;flex-direction:column;gap:1px}
+.fch-lbl{font-size:11px;color:#6b7280;font-weight:700}
+.fch-val{font-family:var(--mono);font-size:15px;font-weight:700;color:#e5e7eb}
+
+/* Summary */
+.sum-heading{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.sum-sub{font-size:12px;color:var(--ink3);margin-bottom:22px}
+.sum-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}
+.sum-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px;position:relative;overflow:hidden;box-shadow:var(--sh)}
+.sum-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.sum-card.c1::before{background:var(--c1)}.sum-card.c2::before{background:var(--c2)}.sum-card.c3::before{background:var(--c3)}.sum-card.c4::before{background:var(--c4)}.sum-card.c5::before{background:var(--c5)}
+.sc-country{font-size:11px;color:var(--ink3);margin-bottom:2px}
+.sc-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:14px}
+.sc-total{font-family:var(--mono);font-size:36px;font-weight:700;line-height:1;margin-bottom:2px}
+.sum-card.c1 .sc-total{color:var(--c1)}.sum-card.c2 .sc-total{color:var(--c2)}.sum-card.c3 .sc-total{color:var(--c3)}.sum-card.c4 .sc-total{color:var(--c4)}.sum-card.c5 .sc-total{color:var(--c5)}
+.sc-total-lbl{font-size:10px;color:var(--ink3);font-weight:500;margin-bottom:12px}
+.sc-rows{border-top:1px solid var(--border);padding-top:10px;display:flex;flex-direction:column;gap:5px}
+.sc-row{display:flex;justify-content:space-between;font-size:11px}
+.sc-row-lbl{color:var(--ink3)}.sc-row-val{font-family:var(--mono);font-weight:600;color:var(--ink2)}
+.sc-fte{font-size:10px;color:var(--ink4);font-family:var(--mono);margin-top:8px}
+.sum-table-wrap{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--sh)}
+.sum-table{width:100%;border-collapse:collapse;font-size:12px}
+.sum-table th{padding:10px 16px;text-align:left;font-size:10px;font-weight:700;color:var(--ink3);letter-spacing:.5px;text-transform:uppercase;background:var(--panel);border-bottom:1px solid var(--border)}
+.sum-table td{padding:11px 16px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--ink2)}
+.sum-table tr:last-child td{border-bottom:none}
+.sum-table .subtotal td{background:var(--panel);font-weight:600;font-size:11px;color:var(--ink3)}
+.sum-table .grand td{background:var(--ink);color:#fff;font-weight:700}
+.mono{font-family:var(--mono);font-weight:600}
+.loc-tag{font-size:10px;padding:2px 9px;border-radius:20px;font-weight:700;display:inline-block}
+
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+@media(max-width:700px){.sum-cards{grid-template-columns:repeat(2,1fr)}.cards-scroll{flex-direction:column}.loc-card{max-width:100%}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div><div class="logo-text">WFM Planner</div><div class="logo-sub">ESM Multi Location · Monthly Planning</div></div>
+  </div>
+  <div class="header-right">
+    <div class="shrink-pill">Shrinkage: <strong id="tb-shrink">30%</strong> <span id="tb-shrink-detail" style="color:var(--ink4)">(10% util + 20% avail)</span></div>
+  </div>
+</div>
+
+<div class="tabbar">
+  <button class="tab-btn active ph" onclick="switchChan('phone')">📞 Phone <span class="tab-pip" id="pip-phone">—</span></button>
+  <button class="tab-btn ch"        onclick="switchChan('chat')">💬 Chat <span class="tab-pip" id="pip-chat">—</span></button>
+  <button class="tab-btn em"        onclick="switchChan('email')">✉️ Email <span class="tab-pip" id="pip-email">—</span></button>
+  <button class="tab-btn"           onclick="switchChan('summary')">📊 Summary</button>
+  <div class="tabbar-right" id="vol-mode-bar">
+    <div class="vol-toggle">
+      <button class="vt-btn active" id="vt-equal" onclick="setVolMode('equal')">⚖ Equal volumes</button>
+      <button class="vt-btn" id="vt-split" onclick="setVolMode('split')">↗ Split volumes</button>
+    </div>
+  </div>
+</div>
+
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+
+<div class="ch-view active" id="view-phone">
+  <div class="global-strip" id="gs-phone">
+    <span class="gs-label">📞 Phone Inputs</span>
+    <div class="gs-fields">
+      <div class="gs-field">
+        <label>Monthly Volume</label>
+        <input class="gs-input" id="g-ph-vol" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('phone','vol',this.value)">
+        <span class="gs-unit">calls / mo</span>
+      </div>
+      <span class="gs-arrow">→</span>
+      <div class="gs-field">
+        <label>AHT</label>
+        <input class="gs-input" id="g-ph-aht" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('phone','aht',this.value)">
+        <span class="gs-unit">seconds</span>
+      </div>
+    </div>
+    <span class="gs-info" id="gs-ph-hint"></span>
+  </div>
+  <div class="split-pct-strip" id="sps-phone">
+    <div class="sps-top">
+      <span class="sps-label">↗ Split — enter % of total volume per location (must total 100%)</span>
+      <div class="sps-fields" id="sps-phone-fields"></div>
+      <div class="sps-total">
+        <span class="sps-total-label">Total:</span>
+        <span class="sps-total-val ok" id="sps-phone-total">0%</span>
+      </div>
+    </div>
+    <div class="sps-bar" id="sps-phone-bar" style="margin-bottom:0"></div>
+    <div class="sps-disclaimer" id="sps-phone-disc">⚠ Split exceeds 100% — please adjust percentages so they sum to exactly 100%.</div>
+  </div>
+  <div class="cards-scroll" id="phone-rows"></div>
+</div>
+
+<div class="ch-view" id="view-chat">
+  <div class="global-strip" id="gs-chat">
+    <span class="gs-label">💬 Chat Inputs</span>
+    <div class="gs-fields">
+      <div class="gs-field">
+        <label>Monthly Volume</label>
+        <input class="gs-input" id="g-ch-vol" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('chat','vol',this.value)">
+        <span class="gs-unit">chats / mo</span>
+      </div>
+      <span class="gs-arrow">→</span>
+      <div class="gs-field">
+        <label>AHT</label>
+        <input class="gs-input" id="g-ch-aht" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('chat','aht',this.value)">
+        <span class="gs-unit">minutes</span>
+      </div>
+      <div class="gs-field">
+        <label>Concurrency <span class="tt" data-t="Max simultaneous chats per agent">?</span></label>
+        <input class="gs-input" id="g-ch-conc" type="number" value="3" min="1" max="8" style="width:70px" oninput="onGlobal('chat','conc',this.value)">
+        <span class="gs-unit">chats</span>
+      </div>
+    </div>
+    <span class="gs-info" id="gs-ch-hint"></span>
+  </div>
+  <div class="split-pct-strip" id="sps-chat">
+    <div class="sps-top">
+      <span class="sps-label">↗ Split — enter % of total volume per location (must total 100%)</span>
+      <div class="sps-fields" id="sps-chat-fields"></div>
+      <div class="sps-total"><span class="sps-total-label">Total:</span><span class="sps-total-val ok" id="sps-chat-total">0%</span></div>
+    </div>
+    <div class="sps-bar" id="sps-chat-bar"></div>
+    <div class="sps-disclaimer" id="sps-chat-disc">⚠ Split exceeds 100% — please adjust percentages so they sum to exactly 100%.</div>
+  </div>
+  <div class="cards-scroll" id="chat-rows"></div>
+</div>
+
+<div class="ch-view" id="view-email">
+  <div class="global-strip" id="gs-email">
+    <span class="gs-label">✉️ Email Inputs</span>
+    <div class="gs-fields">
+      <div class="gs-field">
+        <label>Monthly Volume</label>
+        <input class="gs-input" id="g-em-vol" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('email','vol',this.value)">
+        <span class="gs-unit">emails / mo</span>
+      </div>
+      <span class="gs-arrow">→</span>
+      <div class="gs-field">
+        <label>AHT</label>
+        <input class="gs-input" id="g-em-aht" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('email','aht',this.value)">
+        <span class="gs-unit">minutes</span>
+      </div>
+      <div class="gs-field">
+        <label>% Need Response <span class="tt" data-t="Emails that require an agent reply\n(excludes FYI / CC-only)">?</span></label>
+        <input class="gs-input" id="g-em-pct" type="number" value="85" min="1" max="100" style="width:80px" oninput="onGlobal('email','pct',this.value)">
+        <span class="gs-unit">%</span>
+      </div>
+      <div class="gs-field">
+        <label>Monthly Backlog</label>
+        <input class="gs-input" id="g-em-backlog" type="number" value="0" min="0" oninput="onGlobal('email','backlog',this.value)">
+        <span class="gs-unit">emails</span>
+      </div>
+    </div>
+    <span class="gs-info" id="gs-em-hint"></span>
+  </div>
+  <div class="split-pct-strip" id="sps-email">
+    <div class="sps-top">
+      <span class="sps-label">↗ Split — enter % of total volume per location (must total 100%)</span>
+      <div class="sps-fields" id="sps-email-fields"></div>
+      <div class="sps-total"><span class="sps-total-label">Total:</span><span class="sps-total-val ok" id="sps-email-total">0%</span></div>
+    </div>
+    <div class="sps-bar" id="sps-email-bar"></div>
+    <div class="sps-disclaimer" id="sps-email-disc">⚠ Split exceeds 100% — please adjust percentages so they sum to exactly 100%.</div>
+  </div>
+  <div class="cards-scroll" id="email-rows"></div>
+</div>
+
+<div class="summary-view" id="view-summary">
+  <div class="sum-heading">Summary Report</div>
+  <div class="sum-sub">All channels · All locations · Workload formula</div>
+  <div class="sum-cards" id="sv-loc-cards"></div>
+  <div class="sum-table-wrap">
+    <table class="sum-table"><thead><tr>
+      <th>Channel</th><th>Location</th><th>Country</th><th>Monthly Vol</th>
+      <th>Workload hrs</th><th>Attendance hrs</th><th>FTE</th><th>FTE hrs/mo</th><th>Shrinkage</th>
+    </tr></thead><tbody id="sv-tbody"></tbody></table>
+  </div>
+</div>
+</div>
+
+<div class="footer">
+  <div class="footer-seg">
+    <div class="fs-label">Total FTE</div>
+    <div class="fs-val white" id="ft-total-hc">—</div>
+    <div class="fs-sub">All channels · All locations</div>
+  </div>
+  <div class="footer-seg">
+    <div class="fs-label">By Channel</div>
+    <div class="footer-ch">
+      <div class="fch"><div class="fch-lbl">📞 Phone</div><div class="fch-val" id="ft-ch-phone">—</div></div>
+      <div class="fch"><div class="fch-lbl">💬 Chat</div><div class="fch-val" id="ft-ch-chat">—</div></div>
+      <div class="fch"><div class="fch-lbl">✉️ Email</div><div class="fch-val" id="ft-ch-email">—</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════
+   CONSTANTS
+════════════════════════════════════════════════ */
+const CTRY_FTE  = {US:153,UK:137,IN:148,PH:142.5,ZA:195};
+const CTRY_NAME = {US:'United States',UK:'United Kingdom',IN:'India',PH:'Philippines',ZA:'South Africa'};
+const CTRY_FLAG = {US:'🇺🇸',UK:'🇬🇧',IN:'🇮🇳',PH:'🇵🇭',ZA:'🇿🇦'};
+const LOC_COLORS = ['c1','c2','c3','c4','c5'];
+const LOC_PALETTE = ['#2563eb','#ea580c','#0f766e','#7c3aed','#0284c7'];
+
+const LOC = [
+  {country:'PH', name:'Manila',      util:10, occ:20},
+  {country:'IN', name:'Bangalore',   util:10, occ:20},
+  {country:'ZA', name:'Durban',      util:10, occ:20},
+  {country:'US', name:'San Antonio', util:10, occ:20},
+  {country:'UK', name:'London',      util:10, occ:20},
+];
+const N_LOCS = 5;
+
+// Global inputs (shared across all locations in equal mode)
+const GLOBAL = {
+  phone:  {vol:0, aht:0},
+  chat:   {vol:0, aht:0, conc:3},
+  email:  {vol:0, aht:0, pct:85, backlog:0},
+};
+// Per-location split percentages
+const SPLIT_PCT = {
+  phone:  Array(N_LOCS).fill(20),
+  chat:   Array(N_LOCS).fill(20),
+  email:  Array(N_LOCS).fill(20),
+};
+// Per-location channel-specific overrides (AHT can't be split, only vol)
+const LOC_EXTRA = {
+  phone: Array.from({length:N_LOCS},()=>({shift:8})),
+  chat:  Array.from({length:N_LOCS},()=>({shift:8})),
+  email: Array.from({length:N_LOCS},()=>({})),
+};
+
+const RESULTS = {
+  phone: Array.from({length:N_LOCS},()=>({})),
+  chat:  Array.from({length:N_LOCS},()=>({})),
+  email: Array.from({length:N_LOCS},()=>({})),
+};
+
+let CUR_CHAN = 'phone';
+let VOL_MODE = 'equal';
+
+/* ════════════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════════════ */
+const g  = id => document.getElementById(id);
+const gv = id => parseFloat(g(id)?.value)||0;
+const st = (id,v) => { const e=g(id); if(e) e.textContent=v; };
+const modays = () => 22;
+function getFteHrs(li){ return CTRY_FTE[LOC[li].country]||142.5; }
+
+/* ════════════════════════════════════════════════
+   CORE FTE FORMULA (Workload)
+   1. Workload hrs   = (vol × AHT_sec) / 3600
+   2. Attendance hrs = (Workload hrs / (1−Util)) / (1−Availability)
+   3. FTE            = ceil(Attendance hrs / Country hrs/mo)
+════════════════════════════════════════════════ */
+function calcFTE(vol, aht_sec, util, avail, ftehrs){
+  if(!vol||!aht_sec) return {workloadHrs:0, attendanceHrs:0, fte:0};
+  const workloadHrs   = (vol * aht_sec) / 3600;
+  const attendanceHrs = (workloadHrs / (1-util)) / (1-avail);
+  const fte           = Math.ceil(attendanceHrs / ftehrs);
+  return {workloadHrs, attendanceHrs, fte};
+}
+
+/* ════════════════════════════════════════════════
+   VOL PER LOCATION
+════════════════════════════════════════════════ */
+function getVol(ch, li){
+  const totalVol = GLOBAL[ch].vol;
+  if(VOL_MODE === 'equal') return totalVol;
+  // split mode — apply %
+  const pct = SPLIT_PCT[ch][li] / 100;
+  return Math.round(totalVol * pct);
+}
+
+/* ════════════════════════════════════════════════
+   CALC PER CHANNEL
+════════════════════════════════════════════════ */
+function calcPhone(li){
+  const vol    = getVol('phone', li);
+  const aht    = GLOBAL.phone.aht;
+  const ftehrs = getFteHrs(li);
+  const util   = LOC[li].util / 100;
+  const avail  = LOC[li].occ  / 100;
+  const r = calcFTE(vol, aht, util, avail, ftehrs);
+  return {...r, vol, daily:vol?Math.round(vol/modays()):0, ftehrs, util:LOC[li].util, avail:LOC[li].occ};
+}
+
+function calcChat(li){
+  const vol    = getVol('chat', li);
+  const ahtSec = GLOBAL.chat.aht * 60;  // AHT in minutes → seconds
+  const conc   = GLOBAL.chat.conc || 3;
+  const ftehrs = getFteHrs(li);
+  const util   = LOC[li].util / 100;
+  const avail  = LOC[li].occ  / 100;
+  if(!vol||!GLOBAL.chat.aht) return {workloadHrs:0,attendanceHrs:0,fte:0,vol,daily:0,ftehrs,util:LOC[li].util,avail:LOC[li].occ};
+  const r = calcFTE(vol, ahtSec, util, avail, ftehrs);
+  // Apply concurrency: divide FTE by concurrent sessions
+  const fte = Math.ceil(r.fte / conc);
+  return {workloadHrs:r.workloadHrs, attendanceHrs:r.attendanceHrs, fte, vol, daily:vol?Math.round(vol/modays()):0, ftehrs, util:LOC[li].util, avail:LOC[li].occ};
+}
+
+function calcEmail(li){
+  const totalVol = getVol('email', li);
+  const ahtSec   = GLOBAL.email.aht * 60;
+  const pct      = (GLOBAL.email.pct||85) / 100;
+  const backlog  = GLOBAL.email.backlog||0;
+  const ftehrs   = getFteHrs(li);
+  const util     = LOC[li].util / 100;
+  const avail    = LOC[li].occ  / 100;
+  // Distribute backlog proportionally in split mode
+  const locBacklog = VOL_MODE==='equal' ? backlog : Math.round(backlog * (SPLIT_PCT.email[li]/100));
+  const actVol = (totalVol + locBacklog) * pct;
+  const r = calcFTE(actVol, ahtSec, util, avail, ftehrs);
+  return {...r, vol:totalVol, daily:totalVol?Math.round(totalVol/modays()):0, ftehrs, util:LOC[li].util, avail:LOC[li].occ};
+}
+
+/* ════════════════════════════════════════════════
+   BUILD CARDS
+════════════════════════════════════════════════ */
+function frow(label, rightHtml, tip=''){
+  return `<div class="field-row">
+    <span class="field-label">${label}${tip?` <span class="tt" data-t="${tip}">?</span>`:''}</span>
+    <div class="field-right">${rightHtml}</div>
+  </div>`;
+}
+
+function shrinkBlock(li){
+  const l=LOC[li], tot=l.util+l.occ;
+  return `<div class="shrink-block">
+    <div class="shrink-block-title">Shrinkage</div>
+    <div class="shrink-row">
+      <span class="shrink-label util">Utilisation <span class="tt" data-t="In-office: training, coaching, meetings">?</span></span>
+      <div class="shrink-input-wrap">
+        <input class="shrink-input" id="sh-util-${li}" type="number" value="${l.util}" min="0" max="60" oninput="onShrink(${li})">
+        <span class="shrink-pct">%</span>
+      </div>
+    </div>
+    <div class="shrink-row">
+      <span class="shrink-label avail">Availability <span class="tt" data-t="Absence: sickness, lateness, unplanned leave">?</span></span>
+      <div class="shrink-input-wrap">
+        <input class="shrink-input" id="sh-avail-${li}" type="number" value="${l.occ}" min="0" max="60" oninput="onShrink(${li})">
+        <span class="shrink-pct">%</span>
+      </div>
+    </div>
+    <div class="shrink-bar">
+      <div class="shrink-bar-u" id="shb-u-${li}" style="width:${l.util}%"></div>
+      <div class="shrink-bar-a" id="shb-a-${li}" style="left:${l.util}%;width:${l.occ}%"></div>
+    </div>
+    <div class="shrink-total-row">
+      <span class="shrink-total-label">Total Shrinkage</span>
+      <span class="shrink-total-val" id="sh-tot-${li}">${tot}%</span>
+    </div>
+  </div>`;
+}
+
+function resultBlock(ch, li){
+  const pfx = {phone:'ph',chat:'ch',email:'em'}[ch];
+  return `<div class="result-block">
+    <div class="result-step"><span class="rs-label">① Workload hrs</span><span class="rs-val" id="ir-wh-${pfx}-${li}">—</span></div>
+    <div class="result-step"><span class="rs-label">② Attendance hrs</span><span class="rs-val" id="ir-ah-${pfx}-${li}">—</span></div>
+    <div class="result-divider"></div>
+    <div class="rp-label">FTE Required</div>
+    <div class="rp-fte" id="ir-fte-${pfx}-${li}">—</div>
+  </div>`;
+}
+
+function locHead(li){
+  const l = LOC[li];
+  const opts = [['US','🇺🇸 United States'],['UK','🇬🇧 United Kingdom'],['IN','🇮🇳 India'],['PH','🇵🇭 Philippines'],['ZA','🇿🇦 South Africa']];
+  const opH = opts.map(([v,lb])=>`<option value="${v}"${v===l.country?' selected':''}>${lb}</option>`).join('');
+  return `<div class="card-head">
+    <div class="card-loc-row">
+      <span class="card-flag" id="cf-${li}">${CTRY_FLAG[l.country]}</span>
+      <input class="card-name-input" id="ln-${li}" value="${l.name}" oninput="LOC[${li}].name=this.value;renderAll()">
+    </div>
+    <select class="card-country-select" id="lc-${li}" onchange="onCountry(${li})">${opH}</select>
+    <span class="fte-badge" id="lfte-${li}">${CTRY_FTE[l.country]} hrs/mo</span>
+  </div>`;
+}
+
+// Read-only volume display inside each card
+function volDisplay(ch, li){
+  const vol = getVol(ch, li);
+  const unit = {phone:'calls',chat:'chats',email:'emails'}[ch];
+  return `<div class="card-vol-display" id="cvd-${ch}-${li}">
+    <span class="cvd-label">Monthly Volume</span>
+    <span class="cvd-val">${vol>0?vol.toLocaleString():'—'} ${unit}</span>
+  </div>`;
+}
+
+function buildPhoneCol(li){
+  return `<div class="loc-card c${li+1}" id="ph-col-${li}">
+    ${locHead(li)}
+    ${volDisplay('phone', li)}
+    ${shrinkBlock(li)}
+    ${resultBlock('phone', li)}
+  </div>`;
+}
+
+function buildChatCol(li){
+  return `<div class="loc-card c${li+1}" id="ch-col-${li}">
+    ${locHead(li)}
+    ${volDisplay('chat', li)}
+    ${shrinkBlock(li)}
+    ${resultBlock('chat', li)}
+  </div>`;
+}
+
+function buildEmailCol(li){
+  return `<div class="loc-card c${li+1}" id="em-col-${li}">
+    ${locHead(li)}
+    ${volDisplay('email', li)}
+    ${shrinkBlock(li)}
+    ${resultBlock('email', li)}
+  </div>`;
+}
+
+function buildAllRows(){
+  const locs = Array.from({length:N_LOCS},(_,i)=>i);
+  g('phone-rows').innerHTML = locs.map(buildPhoneCol).join('');
+  g('chat-rows').innerHTML  = locs.map(buildChatCol).join('');
+  g('email-rows').innerHTML = locs.map(buildEmailCol).join('');
+  buildSplitPctFields();
+}
+
+/* ════════════════════════════════════════════════
+   SPLIT % FIELDS
+════════════════════════════════════════════════ */
+function buildSplitPctFields(){
+  ['phone','chat','email'].forEach(ch=>{
+    const container = g(`sps-${ch}-fields`);
+    if(!container) return;
+    container.innerHTML = LOC.map((loc,li)=>`
+      <div class="sps-loc">
+        <span class="sps-loc-name" style="color:${LOC_PALETTE[li]}">${CTRY_FLAG[loc.country]} ${loc.name}</span>
+        <input class="sps-loc-input" id="sps-${ch}-${li}" type="number" value="${SPLIT_PCT[ch][li]}" min="0" max="100" oninput="onSplitPct('${ch}',${li},this.value)">
+        <span class="sps-pct-sym">%</span>
+      </div>`).join('');
+  });
+}
+
+function updateSplitUI(ch){
+  const total = SPLIT_PCT[ch].reduce((a,b)=>a+b,0);
+  const totalEl = g(`sps-${ch}-total`);
+  const discEl  = g(`sps-${ch}-disc`);
+  const barEl   = g(`sps-${ch}-bar`);
+  if(totalEl){
+    totalEl.textContent = total+'%';
+    totalEl.className   = 'sps-total-val '+(total===100?'ok':'warn');
+  }
+  if(discEl) discEl.classList.toggle('show', total > 100);
+  // Stacked bar
+  if(barEl){
+    barEl.innerHTML = SPLIT_PCT[ch].map((pct,i)=>
+      `<div class="sps-bar-seg" style="width:${Math.min(pct,100-SPLIT_PCT[ch].slice(0,i).reduce((a,b)=>a+b,0))}%;background:${LOC_PALETTE[i]}"></div>`
+    ).join('');
+  }
+}
+
+/* ════════════════════════════════════════════════
+   RENDER RESULTS
+════════════════════════════════════════════════ */
+function renderResults(){
+  const pfxMap = {phone:'ph',chat:'ch',email:'em'};
+  ['phone','chat','email'].forEach(ch=>{
+    const pfx = pfxMap[ch], rs = RESULTS[ch];
+    for(let i=0;i<N_LOCS;i++){
+      const r = rs[i];
+      st(`ir-wh-${pfx}-${i}`, r.workloadHrs   ? r.workloadHrs.toFixed(1)+' h'   : '—');
+      st(`ir-ah-${pfx}-${i}`, r.attendanceHrs ? r.attendanceHrs.toFixed(1)+' h' : '—');
+      st(`ir-fte-${pfx}-${i}`,r.fte           ? r.fte                            : '—');
+    }
+    // Update volume display inside each card
+    for(let i=0;i<N_LOCS;i++){
+      const vol = getVol(ch,i);
+      const unit = {phone:'calls',chat:'chats',email:'emails'}[ch];
+      const el = g(`cvd-${ch}-${i}`);
+      if(el){
+        const valEl = el.querySelector('.cvd-val');
+        if(valEl) valEl.textContent = vol>0 ? vol.toLocaleString()+' '+unit : '—';
+      }
+    }
+    const tot = rs.reduce((a,r)=>a+(r.fte||0),0);
+    st('pip-'+ch, tot||'—');
+  });
+}
+
+function updateFooter(){
+  let gFTE=0;
+  const chTots={phone:0,chat:0,email:0};
+  ['phone','chat','email'].forEach(ch=>{
+    for(let i=0;i<N_LOCS;i++){gFTE+=RESULTS[ch][i].fte||0;chTots[ch]+=RESULTS[ch][i].fte||0;}
+  });
+  st('ft-total-hc', gFTE||'—');
+  ['phone','chat','email'].forEach(ch=>st('ft-ch-'+ch, chTots[ch]||'—'));
+}
+
+/* ════════════════════════════════════════════════
+   GLOBAL INPUT HINTS
+════════════════════════════════════════════════ */
+function updateHint(ch){
+  const hintEl = g(`gs-${ch==='phone'?'ph':ch==='chat'?'ch':'em'}-hint`);
+  if(!hintEl) return;
+  const vol = GLOBAL[ch].vol, aht = GLOBAL[ch].aht;
+  if(!vol||!aht){ hintEl.textContent=''; return; }
+  const ahtSec = ch==='phone' ? aht : aht*60;
+  const wl = (vol*ahtSec)/3600;
+  const dailyVol = Math.round(vol/modays());
+  hintEl.textContent = `${dailyVol.toLocaleString()} ${ch==='phone'?'calls':ch==='chat'?'chats':'emails'}/day · ${wl.toFixed(0)} workload hrs/mo`;
+}
+
+/* ════════════════════════════════════════════════
+   MASTER CALC
+════════════════════════════════════════════════ */
+function calcAll(){
+  for(let li=0;li<N_LOCS;li++){
+    RESULTS.phone[li] = calcPhone(li);
+    RESULTS.chat[li]  = calcChat(li);
+    RESULTS.email[li] = calcEmail(li);
+  }
+  renderResults();
+  updateFooter();
+  if(CUR_CHAN==='summary') renderSummary();
+}
+
+function renderAll(){ buildAllRows(); calcAll(); }
+
+/* ════════════════════════════════════════════════
+   INPUT HANDLERS
+════════════════════════════════════════════════ */
+function onGlobal(ch, fld, raw){
+  const val = parseFloat(raw)||0;
+  GLOBAL[ch][fld] = val;
+  updateHint(ch);
+  calcAll();
+}
+
+function onSplitPct(ch, li, raw){
+  SPLIT_PCT[ch][li] = parseFloat(raw)||0;
+  updateSplitUI(ch);
+  calcAll();
+}
+
+function onShrink(li){
+  LOC[li].util = parseFloat(g(`sh-util-${li}`)?.value)||0;
+  LOC[li].occ  = parseFloat(g(`sh-avail-${li}`)?.value)||0;
+  const tot = LOC[li].util + LOC[li].occ;
+  const bu = g(`shb-u-${li}`); if(bu) bu.style.width = LOC[li].util+'%';
+  const ba = g(`shb-a-${li}`); if(ba){ ba.style.left=LOC[li].util+'%'; ba.style.width=LOC[li].occ+'%'; }
+  const tv = g(`sh-tot-${li}`); if(tv) tv.textContent = tot+'%';
+  updateTopbarShrink();
+  calcAll();
+}
+
+function onCountry(li){
+  const sel = g(`lc-${li}`); if(!sel) return;
+  LOC[li].country = sel.value;
+  const ftehrs = CTRY_FTE[LOC[li].country];
+  const lf = g(`lfte-${li}`); if(lf) lf.textContent = ftehrs+' hrs/mo';
+  const cf = g(`cf-${li}`);   if(cf) cf.textContent  = CTRY_FLAG[LOC[li].country];
+  // Also update split % field name labels
+  ['phone','chat','email'].forEach(ch=>{
+    const nameEl = g(`sps-${ch}-fields`)?.querySelectorAll('.sps-loc-name')[li];
+    if(nameEl) nameEl.textContent = `${CTRY_FLAG[LOC[li].country]} ${LOC[li].name}`;
+  });
+  calcAll();
+}
+
+function updateTopbarShrink(){
+  const tots = Array.from({length:N_LOCS},(_,li)=>LOC[li].util+LOC[li].occ);
+  const avg  = Math.round(tots.reduce((a,b)=>a+b,0)/N_LOCS);
+  st('tb-shrink', avg+'%');
+  const us = LOC.slice(0,N_LOCS).map(l=>l.util), os = LOC.slice(0,N_LOCS).map(l=>l.occ);
+  const sU = us.every(u=>u===us[0]), sO = os.every(o=>o===os[0]);
+  st('tb-shrink-detail', sU&&sO ? `(${us[0]}% util + ${os[0]}% avail)` : '(avg across locs)');
+}
+
+/* ════════════════════════════════════════════════
+   SUMMARY
+════════════════════════════════════════════════ */
+function renderSummary(){
+  const CNAMES = {phone:'📞 Phone',chat:'💬 Chat',email:'✉️ Email'};
+  const cards = g('sv-loc-cards');
+  if(cards) cards.innerHTML = Array.from({length:N_LOCS},(_,li)=>{
+    const loc=LOC[li];
+    const pS=RESULTS.phone[li].fte||0, cS=RESULTS.chat[li].fte||0, eS=RESULTS.email[li].fte||0;
+    const tot=pS+cS+eS;
+    return `<div class="sum-card c${li+1}">
+      <div class="sc-country">${CTRY_FLAG[loc.country]} ${CTRY_NAME[loc.country]}</div>
+      <div class="sc-name">${loc.name}</div>
+      <div class="sc-total">${tot||'—'}</div>
+      <div class="sc-total-lbl">Total FTE</div>
+      <div class="sc-rows">
+        ${[['phone',pS,'📞'],['chat',cS,'💬'],['email',eS,'✉️']].map(([ch,v,ico])=>`
+          <div class="sc-row"><span class="sc-row-lbl">${ico} ${ch.charAt(0).toUpperCase()+ch.slice(1)}</span><span class="sc-row-val">${v||'—'}</span></div>`).join('')}
+      </div>
+      <div class="sc-fte">FTE hrs/mo: ${CTRY_FTE[loc.country]}</div>
+    </div>`;
+  }).join('');
+
+  const tbody = g('sv-tbody'); if(!tbody) return;
+  let rows='', gFTE=0;
+  ['phone','chat','email'].forEach(ch=>{
+    let tFTE=0, tVol=0;
+    Array.from({length:N_LOCS},(_,li)=>{
+      const r=RESULTS[ch][li], loc=LOC[li], cn=li+1;
+      tFTE+=r.fte||0; tVol+=r.vol||0;
+      rows+=`<tr>
+        <td style="color:var(--ink3)">${li===0?CNAMES[ch]:''}</td>
+        <td><span class="loc-tag" style="background:var(--c${cn}l);color:var(--c${cn});border:1px solid var(--c${cn}b)">${loc.name}</span></td>
+        <td>${CTRY_FLAG[loc.country]} ${CTRY_NAME[loc.country]}</td>
+        <td class="mono">${(r.vol||0).toLocaleString()}</td>
+        <td class="mono" style="color:var(--ink3)">${r.workloadHrs?r.workloadHrs.toFixed(1):'—'}</td>
+        <td class="mono" style="color:var(--ink3)">${r.attendanceHrs?r.attendanceHrs.toFixed(1):'—'}</td>
+        <td class="mono" style="color:var(--c${cn})">${r.fte||'—'}</td>
+        <td class="mono">${CTRY_FTE[loc.country]}</td>
+        <td style="font-size:11px;color:var(--ink3)">${loc.util}% + ${loc.occ}%</td>
+      </tr>`;
+    });
+    gFTE+=tFTE;
+    rows+=`<tr class="subtotal"><td colspan="2">↳ ${CNAMES[ch]} subtotal</td><td colspan="2" class="mono">${tVol.toLocaleString()}</td><td colspan="2">—</td><td class="mono">${tFTE}</td><td colspan="2">—</td></tr>`;
+  });
+  rows+=`<tr class="grand"><td colspan="3"><strong>Grand Total</strong></td><td colspan="3">—</td><td class="mono">${gFTE}</td><td colspan="2">—</td></tr>`;
+  tbody.innerHTML=rows;
+}
+
+/* ════════════════════════════════════════════════
+   UI CONTROLS
+════════════════════════════════════════════════ */
+function switchChan(ch){
+  CUR_CHAN=ch;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active','ph','ch','em'));
+  const cls={phone:'ph',chat:'ch',email:'em'};
+  const btn=document.querySelector(`.tab-btn[onclick*="'${ch}'"]`);
+  if(btn){btn.classList.add('active');if(cls[ch])btn.classList.add(cls[ch]);}
+  document.querySelectorAll('.ch-view,.summary-view').forEach(v=>v.classList.remove('active'));
+  const view=g('view-'+ch); if(view) view.classList.add('active');
+  const vmb=g('vol-mode-bar'); if(vmb) vmb.style.display=['phone','chat','email'].includes(ch)?'flex':'none';
+  if(ch==='summary') renderSummary();
+}
+
+function setVolMode(mode){
+  VOL_MODE=mode;
+  g('vt-equal').classList.toggle('active',mode==='equal');
+  g('vt-split').classList.toggle('active',mode==='split');
+  // Show / hide split % strips
+  ['phone','chat','email'].forEach(ch=>{
+    const sps=g('sps-'+ch); if(sps) sps.classList.toggle('show',mode==='split');
+    updateSplitUI(ch);
+  });
+  calcAll();
+}
+
+/* ════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════ */
+buildAllRows();
+updateTopbarShrink();
+calcAll();
+</script>
+</body>
+</html>
