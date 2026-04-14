@@ -3,29 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WFM Planner — BPO Multi-Location</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<title>RFP Sizing Calculator — BPO Multi-Location</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --page:#f0f2f5; --white:#ffffff; --panel:#f8f9fb;
-  --border:#e2e5ea; --border2:#c8cdd6;
-  --ink:#111827; --ink2:#374151; --ink3:#6b7280; --ink4:#9ca3af;
-  --blue:#2563eb; --blue-l:#dbeafe; --blue-b:#93c5fd;
+  /* Konecta Brand Palette — matched to Pricing & Revenue Estimator */
+  --k-navy:    #06152B;
+  --k-blue:    #0057FF;
+  --k-blue2:   #0041CC;
+  --k-sky:     #E8F0FF;
+  --k-white:   #FFFFFF;
+  --k-off:     #F4F6FB;
+  --k-card:    #FFFFFF;
+  --k-border:  #DDE3F0;
+  --k-muted:   #6B7899;
+  --k-text:    #0D1B3E;
+  --k-text2:   #3D4F72;
+  --k-success: #00B87C;
+  --k-danger:  #E53939;
+  --k-warn:    #F59E0B;
+  --k-accent:  #0057FF;
+
+  --page:var(--k-off); --white:var(--k-white); --panel:var(--k-sky);
+  --border:var(--k-border); --border2:#b0bcda;
+  --ink:var(--k-text); --ink2:var(--k-text2); --ink3:var(--k-muted); --ink4:#9ca3af;
+  --blue:var(--k-blue); --blue-l:var(--k-sky); --blue-b:#93b8ff;
   --orange:#ea580c; --orange-l:#fff7ed; --orange-b:#fed7aa;
   --teal:#0f766e; --teal-l:#f0fdfa; --teal-b:#99f6e4;
-  --violet:#7c3aed; --violet-l:#f5f3ff; --violet-b:#ddd6fe;
-  --sky:#0284c7; --sky-l:#f0f9ff; --sky-b:#bae6fd;
-  --green:#16a34a; --amber:#d97706; --red:#dc2626;
-  --phone-c:#0369a1; --chat-c:#7c3aed; --email-c:#047857;
-  --c1:var(--blue);   --c1l:var(--blue-l);   --c1b:var(--blue-b);
-  --c2:var(--orange); --c2l:var(--orange-l);  --c2b:var(--orange-b);
-  --c3:var(--teal);   --c3l:var(--teal-l);    --c3b:var(--teal-b);
-  --c4:var(--violet); --c4l:var(--violet-l);  --c4b:var(--violet-b);
-  --c5:var(--sky);    --c5l:var(--sky-l);     --c5b:var(--sky-b);
+  --violet:#0041CC; --violet-l:#E8F0FF; --violet-b:#93b8ff;
+  --sky:#0057FF; --sky-l:#E8F0FF; --sky-b:#93b8ff;
+  --green:var(--k-success); --amber:var(--k-warn); --red:var(--k-danger);
+  --phone-c:#0057FF; --chat-c:#0041CC; --email-c:#00B87C;
+  --c1:#0057FF;   --c1l:#E8F0FF;   --c1b:#93b8ff;
+  --c2:#ea580c;   --c2l:#fff7ed;   --c2b:#fed7aa;
+  --c3:#0f766e;   --c3l:#f0fdfa;   --c3b:#99f6e4;
+  --c4:#0041CC;   --c4l:#E8F0FF;   --c4b:#93b8ff;
+  --c5:#00B87C;   --c5l:#e6faf4;   --c5b:#6de8c2;
   --header-h:58px; --tabbar-h:48px; --footer-h:64px;
-  --font:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
-  --sh: 0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  --shm:0 4px 16px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.04);
+  --font:'Plus Jakarta Sans',sans-serif; --mono:'JetBrains Mono',monospace;
+  --sh: 0 1px 3px rgba(0,0,0,.07),0 4px 12px rgba(0,0,0,.06);
+  --shm:0 4px 16px rgba(0,87,255,.12);
   --shl:0 8px 32px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.04);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -33,24 +50,24 @@ html{font-size:13px}
 body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
 
 /* ── HEADER ─────────────────────────────────────────── */
-.header{height:var(--header-h);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:20px;position:sticky;top:0;z-index:200;box-shadow:var(--sh)}
+.header{height:var(--header-h);background:#1211E6;border-bottom:none;display:flex;align-items:center;padding:0 24px;gap:20px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.25)}
 .logo{display:flex;align-items:center;gap:10px}
-.logo-text{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.2px}
-.logo-sub{font-size:11px;color:var(--ink4);font-weight:400;margin-top:1px}
+.logo-text{font-size:15px;font-weight:700;color:#ffffff;letter-spacing:-.2px}
+.logo-sub{font-size:11px;color:rgba(255,255,255,.55);font-weight:400;margin-top:1px}
 .h-sep{width:1px;height:28px;background:var(--border);flex-shrink:0}
 .hctrl{display:flex;align-items:center;gap:6px}
 .hctrl-label{font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.3px;white-space:nowrap}
 .hselect{appearance:none;-webkit-appearance:none;background:var(--panel);border:1px solid var(--border);color:var(--ink);font-family:var(--font);font-size:12px;font-weight:500;padding:5px 28px 5px 10px;border-radius:7px;outline:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:border-color .15s}
-.hselect:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.08)}
-.shrink-pill{display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:11px;color:var(--ink3)}
-.shrink-pill strong{color:var(--amber);font-weight:700;font-family:var(--mono)}
+.hselect:focus{border-color:var(--k-blue);box-shadow:0 0 0 3px rgba(0,87,255,.08)}
+.shrink-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:5px 12px;font-size:11px;color:rgba(255,255,255,.8)}
+.shrink-pill strong{color:#00e5ff;font-weight:700;font-family:var(--mono)}
 .header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
 
 /* ── TAB BAR ─────────────────────────────────────────── */
 .tabbar{height:var(--tabbar-h);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 24px;position:sticky;top:var(--header-h);z-index:190}
 .tab-btn{display:flex;align-items:center;gap:8px;padding:0 18px;border:none;background:transparent;font-family:var(--font);font-size:12px;font-weight:600;color:var(--ink3);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;transition:all .15s;white-space:nowrap}
 .tab-btn:hover{color:var(--ink2)}
-.tab-btn.active{color:var(--ink);border-bottom-color:var(--ink)}
+.tab-btn.active{color:var(--k-blue);border-bottom-color:var(--k-blue)}
 .tab-btn.active.ph{color:var(--phone-c);border-bottom-color:var(--phone-c)}
 .tab-btn.active.ch{color:var(--chat-c);border-bottom-color:var(--chat-c)}
 .tab-btn.active.em{color:var(--email-c);border-bottom-color:var(--email-c)}
@@ -84,10 +101,21 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
   width:140px;text-align:right;transition:border-color .15s,box-shadow .15s;
 }
 .gs-input::-webkit-outer-spin-button,.gs-input::-webkit-inner-spin-button{-webkit-appearance:none}
-.gs-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.gs-input:focus{border-color:var(--k-blue);box-shadow:0 0 0 3px rgba(0,87,255,.1)}
 .gs-unit{font-size:11px;font-weight:600;color:var(--ink4)}
 .gs-arrow{font-size:16px;color:var(--border2);flex-shrink:0}
 .gs-info{font-size:11px;color:var(--ink4);font-style:italic}
+.vol-period-sel{
+  appearance:none;-webkit-appearance:none;
+  background:var(--k-blue);
+  border:none;border-radius:6px;
+  color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;
+  padding:5px 22px 5px 9px;outline:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 6px center;
+  transition:background .15s;
+}
+.vol-period-sel:hover{background-color:var(--k-blue2);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");}
 
 /* Split % bar + disclaimer */
 .split-pct-strip{
@@ -143,7 +171,24 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 .card-name-input{border:none;background:transparent;font-family:var(--font);font-size:13px;font-weight:700;color:var(--ink);outline:none;width:100%;padding:0;min-width:0}
 .card-name-input:focus{text-decoration:underline;text-underline-offset:2px}
 .card-country-select{display:block;width:100%;border:none;background:transparent;font-family:var(--font);font-size:11px;color:var(--ink3);font-weight:500;outline:none;cursor:pointer;-webkit-appearance:none;padding:0;margin-bottom:3px}
-.fte-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;font-family:var(--mono);padding:2px 8px;border-radius:20px;margin-top:3px}
+/* FTE badge row with pencil */
+.fte-badge-row{display:flex;align-items:center;gap:6px;margin-top:3px}
+.fte-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;font-family:var(--mono);padding:2px 8px;border-radius:20px;margin-top:0}
+.fte-badge-custom{outline:2px solid var(--k-blue);outline-offset:1px}
+.fte-edit-btn{background:none;border:none;cursor:pointer;font-size:11px;padding:2px 4px;border-radius:4px;color:var(--ink3);line-height:1;transition:background .12s}
+.fte-edit-btn:hover{background:var(--k-sky)}
+
+/* FTE inline editor */
+.fte-edit-wrap{display:flex;align-items:center;gap:5px;margin-top:6px;padding:6px 10px;background:var(--k-sky);border-radius:7px;border:1px solid var(--k-border)}
+.fte-edit-input{width:70px;background:var(--white);border:1.5px solid var(--k-blue);border-radius:6px;font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink);padding:4px 7px;outline:none;-moz-appearance:textfield;text-align:right}
+.fte-edit-input::-webkit-outer-spin-button,.fte-edit-input::-webkit-inner-spin-button{-webkit-appearance:none}
+.fte-edit-unit{font-size:10px;color:var(--ink3);font-weight:600}
+.fte-reset-btn{background:none;border:1px solid var(--k-border);cursor:pointer;font-size:12px;padding:3px 6px;border-radius:5px;color:var(--ink3);line-height:1;transition:all .12s}
+.fte-reset-btn:hover{background:var(--white);color:var(--k-blue)}
+
+/* Location active toggle (equal mode) */
+.loc-active-btn{margin-left:auto;flex-shrink:0;width:20px;height:20px;border-radius:50%;border:2px solid var(--border2);background:var(--white);cursor:pointer;font-size:10px;font-weight:700;color:var(--ink4);display:flex;align-items:center;justify-content:center;transition:all .15s;line-height:1}
+.loc-active-btn.active{background:var(--k-blue);border-color:var(--k-blue);color:#fff}
 .c1 .fte-badge{background:var(--c1l);color:var(--c1);border:1px solid var(--c1b)}
 .c2 .fte-badge{background:var(--c2l);color:var(--c2);border:1px solid var(--c2b)}
 .c3 .fte-badge{background:var(--c3l);color:var(--c3);border:1px solid var(--c3b)}
@@ -162,11 +207,11 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 .field-right{display:flex;align-items:center;gap:5px;flex-shrink:0}
 .field-input{width:90px;background:var(--panel);border:1.5px solid var(--border);border-radius:7px;font-family:var(--mono);font-size:14px;font-weight:600;color:var(--ink);padding:6px 9px;outline:none;-moz-appearance:textfield;text-align:right;transition:border-color .15s,box-shadow .15s}
 .field-input::-webkit-outer-spin-button,.field-input::-webkit-inner-spin-button{-webkit-appearance:none}
-.loc-card.c1 .field-input:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.loc-card.c1 .field-input:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(0,87,255,.1)}
 .loc-card.c2 .field-input:focus{border-color:var(--c2);box-shadow:0 0 0 3px rgba(234,88,12,.1)}
 .loc-card.c3 .field-input:focus{border-color:var(--c3);box-shadow:0 0 0 3px rgba(15,118,110,.1)}
-.loc-card.c4 .field-input:focus{border-color:var(--c4);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
-.loc-card.c5 .field-input:focus{border-color:var(--c5);box-shadow:0 0 0 3px rgba(2,132,199,.1)}
+.loc-card.c4 .field-input:focus{border-color:var(--c4);box-shadow:0 0 0 3px rgba(0,65,204,.1)}
+.loc-card.c5 .field-input:focus{border-color:var(--c5);box-shadow:0 0 0 3px rgba(0,184,124,.1)}
 .field-unit{font-size:10px;color:var(--ink4);font-weight:500;white-space:nowrap}
 
 /* Shrinkage block */
@@ -174,16 +219,16 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 .shrink-block-title{font-size:10px;font-weight:700;color:var(--ink4);letter-spacing:.6px;text-transform:uppercase;margin-bottom:10px}
 .shrink-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
 .shrink-label{font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px}
-.shrink-label.util{color:#3b82f6}
-.shrink-label.avail{color:#8b5cf6}
+.shrink-label.util{color:#0057FF}
+.shrink-label.avail{color:#0041CC}
 .shrink-input-wrap{display:flex;align-items:center;gap:4px}
 .shrink-input{width:50px;background:var(--white);border:1.5px solid var(--border);border-radius:6px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ink);padding:4px 8px;outline:none;-moz-appearance:textfield;text-align:right;transition:border-color .15s}
 .shrink-input::-webkit-outer-spin-button,.shrink-input::-webkit-inner-spin-button{-webkit-appearance:none}
 .shrink-input:focus{border-color:var(--border2)}
 .shrink-pct{font-size:11px;color:var(--ink4);width:10px}
 .shrink-bar{height:5px;border-radius:3px;background:var(--border);overflow:hidden;position:relative;margin-bottom:7px}
-.shrink-bar-u{position:absolute;left:0;top:0;height:100%;background:#3b82f6;border-radius:3px;transition:width .3s}
-.shrink-bar-a{position:absolute;top:0;height:100%;background:#8b5cf6;border-radius:0 3px 3px 0;transition:width .3s,left .3s}
+.shrink-bar-u{position:absolute;left:0;top:0;height:100%;background:#0057FF;border-radius:3px;transition:width .3s}
+.shrink-bar-a{position:absolute;top:0;height:100%;background:#0041CC;border-radius:0 3px 3px 0;transition:width .3s,left .3s}
 .shrink-total-row{display:flex;align-items:center;justify-content:space-between}
 .shrink-total-label{font-size:10px;font-weight:600;color:var(--ink3)}
 .shrink-total-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber)}
@@ -207,8 +252,8 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 .tt:hover::after{content:attr(data-t);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:10px;padding:6px 10px;border-radius:7px;white-space:pre-wrap;z-index:999;pointer-events:none;max-width:210px;line-height:1.5;font-family:var(--font);font-weight:400;box-shadow:var(--shl)}
 
 /* Footer - Updated Styles */
-.footer{background:var(--ink);height:var(--footer-h);display:flex;align-items:stretch;border-top:1px solid #1f2937;flex-shrink:0}
-.footer-seg{display:flex;flex-direction:column;justify-content:center;padding:0 28px;border-right:1px solid #1f2937}
+.footer{background:var(--k-navy);height:var(--footer-h);display:flex;align-items:stretch;border-top:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.footer-seg{display:flex;flex-direction:column;justify-content:center;padding:0 28px;border-right:1px solid rgba(255,255,255,.08)}
 .footer-seg:last-child{border-right:none}
 /* White color for Total FTE section labels and values */
 .fs-label{font-size:11px;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px}
@@ -249,16 +294,65 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 @media(max-width:700px){.sum-cards{grid-template-columns:repeat(2,1fr)}.cards-scroll{flex-direction:column}.loc-card{max-width:100%}}
+
+/* ── HOME BUTTON ─────────────────────────────────────── */
+.home-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:8px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  color:#fff;cursor:pointer;transition:all .15s;flex-shrink:0;
+}
+.home-btn:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.35);}
+
+/* ── HOME MODAL ──────────────────────────────────────── */
+.home-modal-overlay{
+  display:none;position:fixed;inset:0;z-index:999;
+  background:rgba(6,21,43,.55);backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;
+}
+.home-modal-overlay.show{display:flex;}
+.home-modal{
+  background:#fff;border-radius:16px;padding:32px 28px 24px;
+  max-width:380px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,.22);
+  text-align:center;animation:modalIn .2s ease;
+}
+@keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(8px)}to{opacity:1;transform:none}}
+.home-modal-icon{font-size:36px;margin-bottom:12px;line-height:1;}
+.home-modal-title{font-size:16px;font-weight:800;color:var(--k-text);margin-bottom:10px;letter-spacing:-.3px;}
+.home-modal-body{font-size:12px;color:var(--k-muted);line-height:1.65;margin-bottom:24px;}
+.home-modal-actions{display:flex;gap:10px;}
+.hm-btn{flex:1;padding:10px 14px;border-radius:9px;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;border:none;transition:all .15s;}
+.hm-btn-ok{background:var(--k-sky);color:var(--k-blue);}
+.hm-btn-ok:hover{background:#d4e4ff;}
+.hm-btn-home{background:var(--k-blue);color:#fff;}
+.hm-btn-home:hover{background:var(--k-blue2);}
 </style>
 </head>
 <body>
 
 <div class="header">
   <div class="logo">
-    <div><div class="logo-text">WFM Planner</div><div class="logo-sub">ESM Multi Location · Monthly Planning</div></div>
+    <button class="home-btn" onclick="showHomeModal()" title="Go to Presales Suite Hub">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+    </button>
+    <div class="h-sep" style="background:rgba(255,255,255,.18)"></div>
+    <div><div class="logo-text">RFP Sizing Calculator</div><div class="logo-sub">ESM Multi Location</div></div>
   </div>
   <div class="header-right">
-    <div class="shrink-pill">Shrinkage: <strong id="tb-shrink">30%</strong> <span id="tb-shrink-detail" style="color:var(--ink4)">(10% util + 20% avail)</span></div>
+    <div class="shrink-pill">Shrinkage: <strong id="tb-shrink">30%</strong> <span id="tb-shrink-detail" style="color:rgba(255,255,255,.5)">(10% util + 20% avail)</span></div>
+  </div>
+</div>
+
+<!-- Home Warning Modal -->
+<div class="home-modal-overlay" id="homeModal">
+  <div class="home-modal">
+    <div class="home-modal-icon">🏠</div>
+    <div class="home-modal-title">Before you leave</div>
+    <div class="home-modal-body">Please ensure you save your results externally, as this tool does not automatically store or retain any output.</div>
+    <div class="home-modal-actions">
+      <button class="hm-btn hm-btn-ok" onclick="closeHomeModal()">OK — Stay here</button>
+      <button class="hm-btn hm-btn-home" onclick="goHome()">🏠 Go to Home</button>
+    </div>
   </div>
 </div>
 
@@ -282,15 +376,22 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
     <span class="gs-label">📞 Phone Inputs</span>
     <div class="gs-fields">
       <div class="gs-field">
-        <label>Monthly Volume</label>
+        <label>Volume</label>
         <input class="gs-input" id="g-ph-vol" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('phone','vol',this.value)">
-        <span class="gs-unit">calls / mo</span>
+        <span class="gs-unit">calls /</span>
+        <select class="vol-period-sel" id="vp-phone" onchange="onVolPeriod('phone',this.value)">
+          <option value="monthly" selected>mo</option>
+          <option value="annual">yr</option>
+        </select>
       </div>
       <span class="gs-arrow">→</span>
       <div class="gs-field">
         <label>AHT</label>
         <input class="gs-input" id="g-ph-aht" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('phone','aht',this.value)">
-        <span class="gs-unit">seconds</span>
+        <select class="vol-period-sel" id="ap-phone" onchange="onAhtUnit('phone',this.value)">
+          <option value="seconds" selected>secs</option>
+          <option value="minutes">mins</option>
+        </select>
       </div>
     </div>
     <span class="gs-info" id="gs-ph-hint"></span>
@@ -315,15 +416,22 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
     <span class="gs-label">💬 Chat Inputs</span>
     <div class="gs-fields">
       <div class="gs-field">
-        <label>Monthly Volume</label>
+        <label>Volume</label>
         <input class="gs-input" id="g-ch-vol" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('chat','vol',this.value)">
-        <span class="gs-unit">chats / mo</span>
+        <span class="gs-unit">chats /</span>
+        <select class="vol-period-sel" id="vp-chat" onchange="onVolPeriod('chat',this.value)">
+          <option value="monthly" selected>mo</option>
+          <option value="annual">yr</option>
+        </select>
       </div>
       <span class="gs-arrow">→</span>
       <div class="gs-field">
         <label>AHT</label>
         <input class="gs-input" id="g-ch-aht" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('chat','aht',this.value)">
-        <span class="gs-unit">minutes</span>
+        <select class="vol-period-sel" id="ap-chat" onchange="onAhtUnit('chat',this.value)">
+          <option value="minutes" selected>mins</option>
+          <option value="seconds">secs</option>
+        </select>
       </div>
       <div class="gs-field">
         <label>Concurrency <span class="tt" data-t="Max simultaneous chats per agent">?</span></label>
@@ -350,15 +458,22 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
     <span class="gs-label">✉️ Email Inputs</span>
     <div class="gs-fields">
       <div class="gs-field">
-        <label>Monthly Volume</label>
+        <label>Volume</label>
         <input class="gs-input" id="g-em-vol" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('email','vol',this.value)">
-        <span class="gs-unit">emails / mo</span>
+        <span class="gs-unit">emails /</span>
+        <select class="vol-period-sel" id="vp-email" onchange="onVolPeriod('email',this.value)">
+          <option value="monthly" selected>mo</option>
+          <option value="annual">yr</option>
+        </select>
       </div>
       <span class="gs-arrow">→</span>
       <div class="gs-field">
         <label>AHT</label>
         <input class="gs-input" id="g-em-aht" type="number" value="0" min="0" placeholder="0" oninput="onGlobal('email','aht',this.value)">
-        <span class="gs-unit">minutes</span>
+        <select class="vol-period-sel" id="ap-email" onchange="onAhtUnit('email',this.value)">
+          <option value="minutes" selected>mins</option>
+          <option value="seconds">secs</option>
+        </select>
       </div>
       <div class="gs-field">
         <label>% Need Response <span class="tt" data-t="Emails that require an agent reply\n(excludes FYI / CC-only)">?</span></label>
@@ -422,16 +537,19 @@ const CTRY_FTE  = {US:153,UK:137,IN:148,PH:142.5,ZA:195};
 const CTRY_NAME = {US:'United States',UK:'United Kingdom',IN:'India',PH:'Philippines',ZA:'South Africa'};
 const CTRY_FLAG = {US:'🇺🇸',UK:'🇬🇧',IN:'🇮🇳',PH:'🇵🇭',ZA:'🇿🇦'};
 const LOC_COLORS = ['c1','c2','c3','c4','c5'];
-const LOC_PALETTE = ['#2563eb','#ea580c','#0f766e','#7c3aed','#0284c7'];
+const LOC_PALETTE = ['#0057FF','#ea580c','#0f766e','#0041CC','#00B87C'];
 
 const LOC = [
-  {country:'PH', name:'Manila',      util:10, occ:20},
-  {country:'IN', name:'Bangalore',   util:10, occ:20},
-  {country:'ZA', name:'Durban',      util:10, occ:20},
-  {country:'US', name:'San Antonio', util:10, occ:20},
-  {country:'UK', name:'London',      util:10, occ:20},
+  {country:'PH', name:'Manila',      util:10, occ:20, customFte:null},
+  {country:'IN', name:'Bangalore',   util:10, occ:20, customFte:null},
+  {country:'ZA', name:'Durban',      util:10, occ:20, customFte:null},
+  {country:'US', name:'San Antonio', util:10, occ:20, customFte:null},
+  {country:'UK', name:'London',      util:10, occ:20, customFte:null},
 ];
 const N_LOCS = 5;
+
+// Which locations are active in equal mode (null = all active)
+const ACTIVE_LOCS = Array(N_LOCS).fill(true);
 
 // Global inputs (shared across all locations in equal mode)
 const GLOBAL = {
@@ -460,6 +578,9 @@ const RESULTS = {
 
 let CUR_CHAN = 'phone';
 let VOL_MODE = 'equal';
+const VOL_PERIOD = { phone: 'monthly', chat: 'monthly', email: 'monthly' };
+// phone default: seconds. chat/email default: minutes
+const AHT_UNIT = { phone: 'seconds', chat: 'minutes', email: 'minutes' };
 
 /* ════════════════════════════════════════════════
    HELPERS
@@ -468,7 +589,7 @@ const g  = id => document.getElementById(id);
 const gv = id => parseFloat(g(id)?.value)||0;
 const st = (id,v) => { const e=g(id); if(e) e.textContent=v; };
 const modays = () => 22;
-function getFteHrs(li){ return CTRY_FTE[LOC[li].country]||142.5; }
+function getFteHrs(li){ return LOC[li].customFte !== null ? LOC[li].customFte : (CTRY_FTE[LOC[li].country]||142.5); }
 
 /* ════════════════════════════════════════════════
    CORE FTE FORMULA (Workload)
@@ -488,19 +609,29 @@ function calcFTE(vol, aht_sec, util, avail, ftehrs){
    VOL PER LOCATION
 ════════════════════════════════════════════════ */
 function getVol(ch, li){
-  const totalVol = GLOBAL[ch].vol;
-  if(VOL_MODE === 'equal') return totalVol;
+  // In equal mode, inactive locations get zero volume
+  if(VOL_MODE === 'equal' && !ACTIVE_LOCS[li]) return 0;
+  const rawVol = GLOBAL[ch].vol;
+  const monthlyVol = VOL_PERIOD[ch] === 'annual' ? rawVol / 12 : rawVol;
+  if(VOL_MODE === 'equal') return monthlyVol;
   // split mode — apply %
   const pct = SPLIT_PCT[ch][li] / 100;
-  return Math.round(totalVol * pct);
+  return Math.round(monthlyVol * pct);
 }
 
 /* ════════════════════════════════════════════════
    CALC PER CHANNEL
 ════════════════════════════════════════════════ */
+/* Convert stored AHT value → seconds based on selected unit */
+function getAhtSec(ch){
+  const raw = GLOBAL[ch].aht;
+  if(AHT_UNIT[ch] === 'minutes') return raw * 60;
+  return raw; // already seconds
+}
+
 function calcPhone(li){
   const vol    = getVol('phone', li);
-  const aht    = GLOBAL.phone.aht;
+  const aht    = getAhtSec('phone');
   const ftehrs = getFteHrs(li);
   const util   = LOC[li].util / 100;
   const avail  = LOC[li].occ  / 100;
@@ -510,27 +641,25 @@ function calcPhone(li){
 
 function calcChat(li){
   const vol    = getVol('chat', li);
-  const ahtSec = GLOBAL.chat.aht * 60;  // AHT in minutes → seconds
+  const ahtSec = getAhtSec('chat');
   const conc   = GLOBAL.chat.conc || 3;
   const ftehrs = getFteHrs(li);
   const util   = LOC[li].util / 100;
   const avail  = LOC[li].occ  / 100;
   if(!vol||!GLOBAL.chat.aht) return {workloadHrs:0,attendanceHrs:0,fte:0,vol,daily:0,ftehrs,util:LOC[li].util,avail:LOC[li].occ};
   const r = calcFTE(vol, ahtSec, util, avail, ftehrs);
-  // Apply concurrency: divide FTE by concurrent sessions
   const fte = Math.ceil(r.fte / conc);
   return {workloadHrs:r.workloadHrs, attendanceHrs:r.attendanceHrs, fte, vol, daily:vol?Math.round(vol/modays()):0, ftehrs, util:LOC[li].util, avail:LOC[li].occ};
 }
 
 function calcEmail(li){
   const totalVol = getVol('email', li);
-  const ahtSec   = GLOBAL.email.aht * 60;
+  const ahtSec   = getAhtSec('email');
   const pct      = (GLOBAL.email.pct||85) / 100;
   const backlog  = GLOBAL.email.backlog||0;
   const ftehrs   = getFteHrs(li);
   const util     = LOC[li].util / 100;
   const avail    = LOC[li].occ  / 100;
-  // Distribute backlog proportionally in split mode
   const locBacklog = VOL_MODE==='equal' ? backlog : Math.round(backlog * (SPLIT_PCT.email[li]/100));
   const actVol = (totalVol + locBacklog) * pct;
   const r = calcFTE(actVol, ahtSec, util, avail, ftehrs);
@@ -591,13 +720,26 @@ function locHead(li){
   const l = LOC[li];
   const opts = [['US','🇺🇸 United States'],['UK','🇬🇧 United Kingdom'],['IN','🇮🇳 India'],['PH','🇵🇭 Philippines'],['ZA','🇿🇦 South Africa']];
   const opH = opts.map(([v,lb])=>`<option value="${v}"${v===l.country?' selected':''}>${lb}</option>`).join('');
-  return `<div class="card-head">
+  const fteVal = getFteHrs(li);
+  const isCustom = l.customFte !== null;
+  const isActive = ACTIVE_LOCS[li];
+  return `<div class="card-head" id="ch-head-${li}" style="${!isActive && VOL_MODE==='equal' ? 'opacity:0.45;' : ''}">
     <div class="card-loc-row">
       <span class="card-flag" id="cf-${li}">${CTRY_FLAG[l.country]}</span>
       <input class="card-name-input" id="ln-${li}" value="${l.name}" oninput="LOC[${li}].name=this.value;renderAll()">
+      ${VOL_MODE==='equal' ? `<button class="loc-active-btn ${isActive?'active':''}" onclick="toggleLocActive(${li})" title="${isActive?'Deactivate location':'Activate location'}">${isActive?'✓':'○'}</button>` : ''}
     </div>
     <select class="card-country-select" id="lc-${li}" onchange="onCountry(${li})">${opH}</select>
-    <span class="fte-badge" id="lfte-${li}">${CTRY_FTE[l.country]} hrs/mo</span>
+    <div class="fte-badge-row">
+      <span class="fte-badge ${isCustom?'fte-badge-custom':''}" id="lfte-${li}">${fteVal} hrs/mo</span>
+      <button class="fte-edit-btn" onclick="toggleFteEdit(${li})" title="Edit FTE hours/month">✏️</button>
+    </div>
+    <div class="fte-edit-wrap" id="fte-edit-${li}" style="display:none">
+      <input class="fte-edit-input" id="fte-inp-${li}" type="number" value="${fteVal}" min="50" max="300"
+        oninput="onFteEdit(${li},this.value)" placeholder="${CTRY_FTE[l.country]}">
+      <span class="fte-edit-unit">hrs/mo</span>
+      <button class="fte-reset-btn" onclick="resetFte(${li})" title="Reset to country default">↺</button>
+    </div>
   </div>`;
 }
 
@@ -724,12 +866,16 @@ function updateFooter(){
 function updateHint(ch){
   const hintEl = g(`gs-${ch==='phone'?'ph':ch==='chat'?'ch':'em'}-hint`);
   if(!hintEl) return;
-  const vol = GLOBAL[ch].vol, aht = GLOBAL[ch].aht;
-  if(!vol||!aht){ hintEl.textContent=''; return; }
-  const ahtSec = ch==='phone' ? aht : aht*60;
-  const wl = (vol*ahtSec)/3600;
-  const dailyVol = Math.round(vol/modays());
-  hintEl.textContent = `${dailyVol.toLocaleString()} ${ch==='phone'?'calls':ch==='chat'?'chats':'emails'}/day · ${wl.toFixed(0)} workload hrs/mo`;
+  const rawVol = GLOBAL[ch].vol, aht = GLOBAL[ch].aht;
+  if(!rawVol||!aht){ hintEl.textContent=''; return; }
+  const monthlyVol = VOL_PERIOD[ch] === 'annual' ? rawVol / 12 : rawVol;
+  const ahtSec = getAhtSec(ch);
+  const ahtMins = (ahtSec / 60).toFixed(1);
+  const wl = (monthlyVol * ahtSec) / 3600;
+  const dailyVol = Math.round(monthlyVol / modays());
+  const annualNote = VOL_PERIOD[ch] === 'annual' ? ` (÷12 = ${Math.round(monthlyVol).toLocaleString()}/mo)` : '';
+  const ahtNote = AHT_UNIT[ch] === 'minutes' ? ` · AHT ${ahtMins} mins` : ` · AHT ${ahtSec}s`;
+  hintEl.textContent = `${dailyVol.toLocaleString()} ${ch==='phone'?'calls':ch==='chat'?'chats':'emails'}/day · ${wl.toFixed(0)} workload hrs/mo${annualNote}${ahtNote}`;
 }
 
 /* ════════════════════════════════════════════════
@@ -758,6 +904,53 @@ function onGlobal(ch, fld, raw){
   calcAll();
 }
 
+function onVolPeriod(ch, period){
+  VOL_PERIOD[ch] = period;
+  updateHint(ch);
+  calcAll();
+}
+
+function onAhtUnit(ch, unit){
+  AHT_UNIT[ch] = unit;
+  updateHint(ch);
+  calcAll();
+}
+
+function toggleFteEdit(li){
+  const wrap = g(`fte-edit-${li}`);
+  if(!wrap) return;
+  const open = wrap.style.display === 'none';
+  wrap.style.display = open ? 'flex' : 'none';
+  if(open){ const inp = g(`fte-inp-${li}`); if(inp) inp.focus(); }
+}
+
+function onFteEdit(li, raw){
+  const val = parseFloat(raw);
+  LOC[li].customFte = (!isNaN(val) && val > 0) ? val : null;
+  // Update badge display
+  const badge = g(`lfte-${li}`);
+  if(badge){
+    badge.textContent = getFteHrs(li) + ' hrs/mo';
+    badge.classList.toggle('fte-badge-custom', LOC[li].customFte !== null);
+  }
+  calcAll();
+}
+
+function resetFte(li){
+  LOC[li].customFte = null;
+  const badge = g(`lfte-${li}`);
+  if(badge){ badge.textContent = getFteHrs(li)+' hrs/mo'; badge.classList.remove('fte-badge-custom'); }
+  const inp = g(`fte-inp-${li}`);
+  if(inp) inp.value = CTRY_FTE[LOC[li].country];
+  calcAll();
+}
+
+function toggleLocActive(li){
+  ACTIVE_LOCS[li] = !ACTIVE_LOCS[li];
+  renderAll();
+  calcAll();
+}
+
 function onSplitPct(ch, li, raw){
   SPLIT_PCT[ch][li] = parseFloat(raw)||0;
   updateSplitUI(ch);
@@ -778,8 +971,10 @@ function onShrink(li){
 function onCountry(li){
   const sel = g(`lc-${li}`); if(!sel) return;
   LOC[li].country = sel.value;
-  const ftehrs = CTRY_FTE[LOC[li].country];
-  const lf = g(`lfte-${li}`); if(lf) lf.textContent = ftehrs+' hrs/mo';
+  LOC[li].customFte = null; // reset override on country change
+  const ftehrs = getFteHrs(li);
+  const lf = g(`lfte-${li}`);
+  if(lf){ lf.textContent = ftehrs+' hrs/mo'; lf.classList.remove('fte-badge-custom'); }
   const cf = g(`cf-${li}`);   if(cf) cf.textContent  = CTRY_FLAG[LOC[li].country];
   // Also update split % field name labels
   ['phone','chat','email'].forEach(ch=>{
@@ -871,8 +1066,31 @@ function setVolMode(mode){
     const sps=g('sps-'+ch); if(sps) sps.classList.toggle('show',mode==='split');
     updateSplitUI(ch);
   });
-  calcAll();
+  // Re-render cards so active toggle shows in equal mode only
+  renderAll();
 }
+
+/* ════════════════════════════════════════════════
+   HOME MODAL
+════════════════════════════════════════════════ */
+function showHomeModal(){
+  g('homeModal').classList.add('show');
+}
+function closeHomeModal(){
+  g('homeModal').classList.remove('show');
+}
+function goHome(){
+  // Go back to the referring page (the Presales Suite Hub), or use history
+  if(document.referrer && document.referrer !== window.location.href){
+    window.location.href = document.referrer;
+  } else {
+    window.history.back();
+  }
+}
+// Close modal if overlay background is clicked
+document.getElementById('homeModal').addEventListener('click', function(e){
+  if(e.target === this) closeHomeModal();
+});
 
 /* ════════════════════════════════════════════════
    INIT
