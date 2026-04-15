@@ -633,7 +633,7 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
       </div>
       <div class="gs-field">
         <label>Concurrency <span class="tt" data-t="Max simultaneous chats per agent">?</span></label>
-        <input class="gs-input" id="g-ch-conc" type="number" value="1.2" min="0" max="8" step="0.1" style="width:70px" oninput="onGlobal('chat','conc',this.value)">
+        <input class="gs-input" id="g-ch-conc" type="number" value="3" min="1" max="8" style="width:70px" oninput="onGlobal('chat','conc',this.value)">
         <span class="gs-unit">chats</span>
       </div>
     </div>
@@ -945,7 +945,7 @@ const ACTIVE_LOCS = Array(N_LOCS).fill(true);
 // Global inputs (shared across all locations in equal mode)
 const GLOBAL = {
   phone:  {vol:0, aht:0},
-  chat:   {vol:0, aht:0, conc:1.2},
+  chat:   {vol:0, aht:0, conc:3},
   email:  {vol:0, aht:0, pct:85, backlog:0},
 };
 // Per-location split percentages
@@ -1033,11 +1033,11 @@ function calcPhone(li){
 function calcChat(li){
   const vol    = getVol('chat', li);
   const ahtSec = getAhtSec('chat');
-  const conc   = GLOBAL.chat.conc || 1.2;
+  const conc   = GLOBAL.chat.conc || 3;
   const ftehrs = getFteHrs(li);
   const util   = LOC[li].util / 100;
   const avail  = LOC[li].occ  / 100;
-  if(!vol||!GLOBAL.chat.aht||!conc) return {workloadHrs:0,attendanceHrs:0,fte:0,vol,daily:0,ftehrs,util:LOC[li].util,avail:LOC[li].occ};
+  if(!vol||!GLOBAL.chat.aht) return {workloadHrs:0,attendanceHrs:0,fte:0,vol,daily:0,ftehrs,util:LOC[li].util,avail:LOC[li].occ};
   const r = calcFTE(vol, ahtSec, util, avail, ftehrs);
   const fte = Math.ceil(r.fte / conc);
   return {workloadHrs:r.workloadHrs, attendanceHrs:r.attendanceHrs, fte, vol, daily:vol?Math.round(vol/modays()):0, ftehrs, util:LOC[li].util, avail:LOC[li].occ};
@@ -1646,7 +1646,7 @@ function calcHoopFte(ch, li, baseResult){
   const ftehrs = getFteHrs(li);
   const util   = LOC[li].util / 100;
   const avail  = LOC[li].occ  / 100;
-  const conc   = ch==='chat' ? (GLOBAL.chat.conc||1.2) : 1;
+  const conc   = ch==='chat' ? (GLOBAL.chat.conc||3) : 1;
 
   const { wkdayPct, wkendPct, peakPct, offpeakPct, hasSplits,
           weekdayDays, weekendDays, dailyOpHrs, daysPerWeek } = hoop;
