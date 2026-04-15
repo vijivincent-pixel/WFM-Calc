@@ -295,6 +295,123 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 @media(max-width:700px){.sum-cards{grid-template-columns:repeat(2,1fr)}.cards-scroll{flex-direction:column}.loc-card{max-width:100%}}
 
+/* ── HOOP PANEL ──────────────────────────────────────── */
+.hoop-bar{
+  background:#fff;border-bottom:1px solid var(--border);
+  padding:8px 24px;display:flex;align-items:center;gap:16px;flex-shrink:0;
+}
+.hoop-toggle{
+  display:flex;align-items:center;gap:7px;
+  background:none;border:1.5px solid var(--k-border);border-radius:8px;
+  padding:5px 13px;font-family:var(--font);font-size:12px;font-weight:600;
+  color:var(--ink2);cursor:pointer;transition:all .15s;
+}
+.hoop-toggle:hover{border-color:var(--k-blue);color:var(--k-blue);background:var(--k-sky);}
+.hoop-toggle.open{border-color:var(--k-blue);color:var(--k-blue);background:var(--k-sky);}
+.hoop-toggle-icon{font-size:9px;transition:transform .2s;display:inline-block;}
+.hoop-toggle.open .hoop-toggle-icon{transform:rotate(90deg);}
+.hoop-optional-badge{
+  font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  padding:2px 7px;border-radius:20px;background:#fef3c7;color:#92400e;border:1px solid #fde68a;
+}
+.hoop-247-btn{
+  display:flex;align-items:center;gap:4px;
+  background:none;border:1.5px solid var(--k-border);border-radius:8px;
+  padding:5px 11px;font-family:var(--mono);font-size:11px;font-weight:700;
+  color:var(--ink3);cursor:pointer;transition:all .15s;letter-spacing:.5px;
+}
+.hoop-247-btn:hover{border-color:var(--k-success);color:var(--k-success);background:#e6faf4;}
+.hoop-clear-btn{
+  display:flex;align-items:center;gap:4px;
+  background:none;border:1.5px solid #fecaca;border-radius:8px;
+  padding:5px 11px;font-family:var(--font);font-size:11px;font-weight:600;
+  color:var(--k-danger);cursor:pointer;transition:all .15s;
+}
+.hoop-clear-btn:hover{background:#fef2f2;border-color:var(--k-danger);}
+.hoop-note{font-size:11px;color:var(--k-muted);font-style:italic;}
+
+.hoop-panel{
+  background:#fafbfd;border-bottom:2px solid var(--k-blue);
+  padding:18px 28px;display:flex;flex-wrap:wrap;gap:0;flex-shrink:0;
+}
+.hoop-section{flex:1;min-width:200px;padding:0 16px 0 0;}
+.hoop-notes-section{flex:2;min-width:300px;}
+.hoop-section-title{font-size:10px;font-weight:700;color:var(--k-muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px;}
+.hoop-tz-note{font-size:10px;font-weight:400;color:var(--ink4);text-transform:none;letter-spacing:0;}
+.hoop-divider{width:1px;background:var(--border);margin:0 16px;flex-shrink:0;align-self:stretch;}
+
+/* Days */
+.hoop-days{display:flex;gap:6px;flex-wrap:wrap;}
+.hoop-day-lbl{
+  display:flex;align-items:center;gap:4px;
+  padding:4px 10px;border-radius:6px;border:1.5px solid var(--border);
+  background:var(--white);cursor:pointer;font-size:11px;font-weight:600;
+  color:var(--ink3);transition:all .15s;user-select:none;
+}
+.hoop-day-lbl:has(input:checked){background:var(--k-blue);border-color:var(--k-blue);color:#fff;}
+.hoop-day-lbl input{display:none;}
+
+/* Hours */
+.hoop-hours-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.hoop-time-input{
+  background:var(--white);border:1.5px solid var(--border);border-radius:7px;
+  font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink);
+  padding:5px 8px;outline:none;transition:border-color .15s;
+}
+.hoop-time-input:focus{border-color:var(--k-blue);}
+.hoop-to{font-size:11px;color:var(--ink4);font-weight:600;}
+.hoop-tz-sel{
+  appearance:none;background:var(--white);border:1.5px solid var(--border);
+  border-radius:7px;font-family:var(--font);font-size:12px;font-weight:600;
+  color:var(--ink2);padding:5px 26px 5px 9px;outline:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 7px center;
+  transition:border-color .15s;
+}
+.hoop-tz-sel:focus{border-color:var(--k-blue);}
+
+/* Splits */
+.hoop-splits-grid{display:flex;gap:12px;flex-wrap:wrap;}
+.hoop-split-item{display:flex;flex-direction:column;gap:5px;}
+.hoop-split-lbl{font-size:10px;font-weight:600;color:var(--ink3);}
+.hoop-split-row{display:flex;align-items:center;gap:4px;}
+.hoop-split-input{
+  width:72px;background:var(--white);border:1.5px solid var(--border);border-radius:7px;
+  font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink);
+  padding:5px 8px;outline:none;-moz-appearance:textfield;text-align:right;
+  transition:border-color .15s;
+}
+.hoop-split-input::-webkit-outer-spin-button,.hoop-split-input::-webkit-inner-spin-button{-webkit-appearance:none;}
+.hoop-split-input:focus{border-color:var(--k-blue);}
+.hoop-split-sym{font-size:11px;color:var(--ink4);font-weight:600;}
+.hoop-split-warn{font-size:11px;color:var(--k-danger);font-weight:600;margin-top:7px;display:flex;align-items:center;gap:4px;}
+
+/* Notes */
+.hoop-notes-input{
+  width:100%;background:var(--white);border:1.5px solid var(--border);border-radius:8px;
+  font-family:var(--font);font-size:12px;color:var(--ink2);padding:8px 12px;
+  outline:none;resize:vertical;line-height:1.55;transition:border-color .15s;
+}
+.hoop-notes-input:focus{border-color:var(--k-blue);}
+
+/* Summary chip strip */
+.hoop-summary{
+  width:100%;margin-top:12px;padding-top:12px;
+  border-top:1px dashed var(--border);
+  display:flex;flex-wrap:wrap;gap:6px;font-size:11px;
+}
+.hoop-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--k-sky);border:1px solid #b8d0ff;
+  color:var(--k-blue);font-weight:600;border-radius:20px;padding:3px 10px;
+}
+
+/* HOOP-adjusted FTE */
+.hoop-fte-row{margin-top:10px;padding:8px 10px;background:var(--k-sky);border-radius:8px;border:1px solid #b8d0ff;}
+.hoop-fte-label{font-size:9px;font-weight:700;color:var(--k-blue);letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px;}
+.hoop-fte-val{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--k-blue);line-height:1;}
+.hoop-fte-detail{font-size:10px;color:var(--k-text2);margin-top:3px;line-height:1.4;}
+
 /* ── HOME BUTTON ─────────────────────────────────────── */
 .home-btn{
   display:flex;align-items:center;justify-content:center;
@@ -408,6 +525,87 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
     <div class="sps-bar" id="sps-phone-bar" style="margin-bottom:0"></div>
     <div class="sps-disclaimer" id="sps-phone-disc">⚠ Split exceeds 100% — please adjust percentages so they sum to exactly 100%.</div>
   </div>
+
+  <!-- HOOP Panel: Phone -->
+  <div class="hoop-bar">
+    <button class="hoop-toggle" onclick="toggleHoop('phone')" id="hoop-toggle-phone">
+      <span class="hoop-toggle-icon" id="hoop-icon-phone">▶</span>
+      🕐 Hours of Operation <span class="hoop-optional-badge">Optional</span>
+    </button>
+    <button class="hoop-247-btn" onclick="setHoop247('phone')" title="Set 24/7 coverage">24 / 7</button>
+    <button class="hoop-clear-btn" onclick="clearHoop('phone')" title="Clear all HOOP data" id="hoop-clear-phone" style="display:none">✕ Clear</button>
+    <span class="hoop-note" id="hoop-note-phone"></span>
+  </div>
+  <div class="hoop-panel" id="hoop-panel-phone" style="display:none">
+    <div class="hoop-section">
+      <div class="hoop-section-title">Days of Operation</div>
+      <div class="hoop-days" id="hoop-days-phone">
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="phone" data-day="Mon" checked onchange="onHoopChange('phone')"><span>Mon</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="phone" data-day="Tue" checked onchange="onHoopChange('phone')"><span>Tue</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="phone" data-day="Wed" checked onchange="onHoopChange('phone')"><span>Wed</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="phone" data-day="Thu" checked onchange="onHoopChange('phone')"><span>Thu</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="phone" data-day="Fri" checked onchange="onHoopChange('phone')"><span>Fri</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="phone" data-day="Sat" onchange="onHoopChange('phone')"><span>Sat</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="phone" data-day="Sun" onchange="onHoopChange('phone')"><span>Sun</span></label>
+      </div>
+    </div>
+    <div class="hoop-divider"></div>
+    <div class="hoop-section">
+      <div class="hoop-section-title">Operating Hours <span class="hoop-tz-note">(specify timezone)</span></div>
+      <div class="hoop-hours-row">
+        <input class="hoop-time-input" type="time" id="hoop-open-phone" value="09:00" onchange="onHoopChange('phone')">
+        <span class="hoop-to">to</span>
+        <input class="hoop-time-input" type="time" id="hoop-close-phone" value="18:00" onchange="onHoopChange('phone')">
+        <select class="hoop-tz-sel" id="hoop-tz-phone" onchange="onHoopChange('phone')">
+          <option value="CST">CST</option><option value="EST">EST</option><option value="PST">PST</option>
+          <option value="GMT">GMT</option><option value="IST">IST</option><option value="SAST">SAST</option>
+          <option value="PHT">PHT</option><option value="AEST">AEST</option><option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="hoop-divider"></div>
+    <div class="hoop-section">
+      <div class="hoop-section-title">Volume Distribution <span class="hoop-tz-note">(optional — for shift planning reference)</span></div>
+      <div class="hoop-splits-grid">
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Weekday %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-wkday-phone" value="" min="0" max="100" placeholder="e.g. 80" onchange="onHoopSplit('phone')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Weekend %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-wkend-phone" value="" min="0" max="100" placeholder="e.g. 20" onchange="onHoopSplit('phone')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Peak hours %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-peak-phone" value="" min="0" max="100" placeholder="e.g. 80" onchange="onHoopSplit('phone')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Off-peak %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-offpeak-phone" value="" min="0" max="100" placeholder="e.g. 20" onchange="onHoopSplit('phone')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="hoop-split-warn" id="hoop-split-warn-phone" style="display:none">⚠ Weekday + Weekend should total 100%</div>
+      <div class="hoop-split-warn" id="hoop-peak-warn-phone" style="display:none">⚠ Peak + Off-peak should total 100%</div>
+    </div>
+    <div class="hoop-divider"></div>
+    <div class="hoop-section hoop-notes-section">
+      <div class="hoop-section-title">Notes <span class="hoop-tz-note">(free text — SLAs, exceptions, seasonal peaks…)</span></div>
+      <textarea class="hoop-notes-input" id="hoop-notes-phone" placeholder="e.g. Closed public holidays · Peak Nov–Dec · SLA: 80% answered in 20s" rows="2"></textarea>
+    </div>
+    <div class="hoop-summary" id="hoop-summary-phone"></div>
+  </div>
   <div class="cards-scroll" id="phone-rows"></div>
 </div>
 
@@ -435,7 +633,7 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
       </div>
       <div class="gs-field">
         <label>Concurrency <span class="tt" data-t="Max simultaneous chats per agent">?</span></label>
-        <input class="gs-input" id="g-ch-conc" type="number" value="3" min="1" max="8" style="width:70px" oninput="onGlobal('chat','conc',this.value)">
+        <input class="gs-input" id="g-ch-conc" type="number" value="1.2" min="0" max="8" step="0.1" style="width:70px" oninput="onGlobal('chat','conc',this.value)">
         <span class="gs-unit">chats</span>
       </div>
     </div>
@@ -449,6 +647,87 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
     </div>
     <div class="sps-bar" id="sps-chat-bar"></div>
     <div class="sps-disclaimer" id="sps-chat-disc">⚠ Split exceeds 100% — please adjust percentages so they sum to exactly 100%.</div>
+  </div>
+
+  <!-- HOOP Panel: Chat -->
+  <div class="hoop-bar">
+    <button class="hoop-toggle" onclick="toggleHoop('chat')" id="hoop-toggle-chat">
+      <span class="hoop-toggle-icon" id="hoop-icon-chat">▶</span>
+      🕐 Hours of Operation <span class="hoop-optional-badge">Optional</span>
+    </button>
+    <button class="hoop-247-btn" onclick="setHoop247('chat')" title="Set 24/7 coverage">24 / 7</button>
+    <button class="hoop-clear-btn" onclick="clearHoop('chat')" title="Clear all HOOP data" id="hoop-clear-chat" style="display:none">✕ Clear</button>
+    <span class="hoop-note" id="hoop-note-chat"></span>
+  </div>
+  <div class="hoop-panel" id="hoop-panel-chat" style="display:none">
+    <div class="hoop-section">
+      <div class="hoop-section-title">Days of Operation</div>
+      <div class="hoop-days" id="hoop-days-chat">
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="chat" data-day="Mon" checked onchange="onHoopChange('chat')"><span>Mon</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="chat" data-day="Tue" checked onchange="onHoopChange('chat')"><span>Tue</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="chat" data-day="Wed" checked onchange="onHoopChange('chat')"><span>Wed</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="chat" data-day="Thu" checked onchange="onHoopChange('chat')"><span>Thu</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="chat" data-day="Fri" checked onchange="onHoopChange('chat')"><span>Fri</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="chat" data-day="Sat" onchange="onHoopChange('chat')"><span>Sat</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="chat" data-day="Sun" onchange="onHoopChange('chat')"><span>Sun</span></label>
+      </div>
+    </div>
+    <div class="hoop-divider"></div>
+    <div class="hoop-section">
+      <div class="hoop-section-title">Operating Hours <span class="hoop-tz-note">(specify timezone)</span></div>
+      <div class="hoop-hours-row">
+        <input class="hoop-time-input" type="time" id="hoop-open-chat" value="09:00" onchange="onHoopChange('chat')">
+        <span class="hoop-to">to</span>
+        <input class="hoop-time-input" type="time" id="hoop-close-chat" value="18:00" onchange="onHoopChange('chat')">
+        <select class="hoop-tz-sel" id="hoop-tz-chat" onchange="onHoopChange('chat')">
+          <option value="CST">CST</option><option value="EST">EST</option><option value="PST">PST</option>
+          <option value="GMT">GMT</option><option value="IST">IST</option><option value="SAST">SAST</option>
+          <option value="PHT">PHT</option><option value="AEST">AEST</option><option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="hoop-divider"></div>
+    <div class="hoop-section">
+      <div class="hoop-section-title">Volume Distribution <span class="hoop-tz-note">(optional — for shift planning reference)</span></div>
+      <div class="hoop-splits-grid">
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Weekday %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-wkday-chat" value="" min="0" max="100" placeholder="e.g. 80" onchange="onHoopSplit('chat')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Weekend %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-wkend-chat" value="" min="0" max="100" placeholder="e.g. 20" onchange="onHoopSplit('chat')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Peak hours %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-peak-chat" value="" min="0" max="100" placeholder="e.g. 80" onchange="onHoopSplit('chat')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Off-peak %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-offpeak-chat" value="" min="0" max="100" placeholder="e.g. 20" onchange="onHoopSplit('chat')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="hoop-split-warn" id="hoop-split-warn-chat" style="display:none">⚠ Weekday + Weekend should total 100%</div>
+      <div class="hoop-split-warn" id="hoop-peak-warn-chat" style="display:none">⚠ Peak + Off-peak should total 100%</div>
+    </div>
+    <div class="hoop-divider"></div>
+    <div class="hoop-section hoop-notes-section">
+      <div class="hoop-section-title">Notes <span class="hoop-tz-note">(free text — SLAs, exceptions, seasonal peaks…)</span></div>
+      <textarea class="hoop-notes-input" id="hoop-notes-chat" placeholder="e.g. 24/7 chat support · Peak Mon mornings · SLA: &lt;30s first response" rows="2"></textarea>
+    </div>
+    <div class="hoop-summary" id="hoop-summary-chat"></div>
   </div>
   <div class="cards-scroll" id="chat-rows"></div>
 </div>
@@ -497,6 +776,87 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
     <div class="sps-bar" id="sps-email-bar"></div>
     <div class="sps-disclaimer" id="sps-email-disc">⚠ Split exceeds 100% — please adjust percentages so they sum to exactly 100%.</div>
   </div>
+
+  <!-- HOOP Panel: Email -->
+  <div class="hoop-bar">
+    <button class="hoop-toggle" onclick="toggleHoop('email')" id="hoop-toggle-email">
+      <span class="hoop-toggle-icon" id="hoop-icon-email">▶</span>
+      🕐 Hours of Operation <span class="hoop-optional-badge">Optional</span>
+    </button>
+    <button class="hoop-247-btn" onclick="setHoop247('email')" title="Set 24/7 coverage">24 / 7</button>
+    <button class="hoop-clear-btn" onclick="clearHoop('email')" title="Clear all HOOP data" id="hoop-clear-email" style="display:none">✕ Clear</button>
+    <span class="hoop-note" id="hoop-note-email"></span>
+  </div>
+  <div class="hoop-panel" id="hoop-panel-email" style="display:none">
+    <div class="hoop-section">
+      <div class="hoop-section-title">Days of Operation</div>
+      <div class="hoop-days" id="hoop-days-email">
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="email" data-day="Mon" checked onchange="onHoopChange('email')"><span>Mon</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="email" data-day="Tue" checked onchange="onHoopChange('email')"><span>Tue</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="email" data-day="Wed" checked onchange="onHoopChange('email')"><span>Wed</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="email" data-day="Thu" checked onchange="onHoopChange('email')"><span>Thu</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="email" data-day="Fri" checked onchange="onHoopChange('email')"><span>Fri</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="email" data-day="Sat" onchange="onHoopChange('email')"><span>Sat</span></label>
+        <label class="hoop-day-lbl"><input type="checkbox" class="hoop-day-cb" data-ch="email" data-day="Sun" onchange="onHoopChange('email')"><span>Sun</span></label>
+      </div>
+    </div>
+    <div class="hoop-divider"></div>
+    <div class="hoop-section">
+      <div class="hoop-section-title">Operating Hours <span class="hoop-tz-note">(specify timezone)</span></div>
+      <div class="hoop-hours-row">
+        <input class="hoop-time-input" type="time" id="hoop-open-email" value="09:00" onchange="onHoopChange('email')">
+        <span class="hoop-to">to</span>
+        <input class="hoop-time-input" type="time" id="hoop-close-email" value="18:00" onchange="onHoopChange('email')">
+        <select class="hoop-tz-sel" id="hoop-tz-email" onchange="onHoopChange('email')">
+          <option value="CST">CST</option><option value="EST">EST</option><option value="PST">PST</option>
+          <option value="GMT">GMT</option><option value="IST">IST</option><option value="SAST">SAST</option>
+          <option value="PHT">PHT</option><option value="AEST">AEST</option><option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="hoop-divider"></div>
+    <div class="hoop-section">
+      <div class="hoop-section-title">Volume Distribution <span class="hoop-tz-note">(optional — for shift planning reference)</span></div>
+      <div class="hoop-splits-grid">
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Weekday %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-wkday-email" value="" min="0" max="100" placeholder="e.g. 80" onchange="onHoopSplit('email')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Weekend %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-wkend-email" value="" min="0" max="100" placeholder="e.g. 20" onchange="onHoopSplit('email')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Peak hours %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-peak-email" value="" min="0" max="100" placeholder="e.g. 80" onchange="onHoopSplit('email')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+        <div class="hoop-split-item">
+          <label class="hoop-split-lbl">Off-peak %</label>
+          <div class="hoop-split-row">
+            <input class="hoop-split-input" type="number" id="hoop-offpeak-email" value="" min="0" max="100" placeholder="e.g. 20" onchange="onHoopSplit('email')">
+            <span class="hoop-split-sym">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="hoop-split-warn" id="hoop-split-warn-email" style="display:none">⚠ Weekday + Weekend should total 100%</div>
+      <div class="hoop-split-warn" id="hoop-peak-warn-email" style="display:none">⚠ Peak + Off-peak should total 100%</div>
+    </div>
+    <div class="hoop-divider"></div>
+    <div class="hoop-section hoop-notes-section">
+      <div class="hoop-section-title">Notes <span class="hoop-tz-note">(free text — SLAs, exceptions, seasonal peaks…)</span></div>
+      <textarea class="hoop-notes-input" id="hoop-notes-email" placeholder="e.g. Mon–Fri only · SLA: respond within 24hrs · Higher volume Q4" rows="2"></textarea>
+    </div>
+    <div class="hoop-summary" id="hoop-summary-email"></div>
+  </div>
   <div class="cards-scroll" id="email-rows"></div>
 </div>
 
@@ -533,9 +893,40 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 /* ════════════════════════════════════════════════
    CONSTANTS
 ════════════════════════════════════════════════ */
-const CTRY_FTE  = {US:153,UK:137,IN:148,PH:142.5,ZA:195};
-const CTRY_NAME = {US:'United States',UK:'United Kingdom',IN:'India',PH:'Philippines',ZA:'South Africa'};
-const CTRY_FLAG = {US:'🇺🇸',UK:'🇬🇧',IN:'🇮🇳',PH:'🇵🇭',ZA:'🇿🇦'};
+/*
+  Country attendance hours per FTE per month — authoritative pre-set values.
+  These already account for working pattern, paid breaks, country-mandated
+  leaves and public holidays. Logic must NOT re-derive these from shift hours.
+  ─────────────────────────────────────────────────────────────────
+  ZA : 195 hrs/mo  (5d/wk · 10h shift · 9h att/day · att = paid hrs here)
+  US : 153 hrs/mo  (5d/wk ·  8h shift · 7.5h att/day · after US holidays/leave)
+  IN : 148 hrs/mo  (5d/wk ·  9h shift · 8h att/day   · after IN holidays/leave)
+  PH : 142.5 hrs/mo(5d/wk ·  9h shift · 7.5h att/day · after PH holidays/leave)
+  UK : 137 hrs/mo  (5d/wk ·  8h shift · 7.5h att/day · after UK holidays/leave)
+
+  Terminology:
+    Shift hrs      = total time on site (all breaks included)
+    Attendance hrs = shift hrs − unpaid breaks only (paid breaks count as attendance)
+    Productive hrs = attendance hrs × (1 − utilisation%)   [in-chair, excl. aux]
+    Transaction hrs= productive hrs × occupancy%           [live contact-handling time]
+
+  FTE formula denominator = ATTENDANCE hrs/mo (pre-set per country above).
+  Utilisation & availability shrinkage are applied on the workload side.
+*/
+const CTRY_PROFILE = {
+  ZA: { name:'South Africa',  flag:'🇿🇦', daysPerWeek:5, shiftHrs:10, attHrs:9.0, paidBreak:1.0, unpaidBreak:0,   attHrsPerMonth:195   },
+  IN: { name:'India',         flag:'🇮🇳', daysPerWeek:5, shiftHrs:9,  attHrs:8.0, paidBreak:1.0, unpaidBreak:0,   attHrsPerMonth:148   },
+  PH: { name:'Philippines',   flag:'🇵🇭', daysPerWeek:5, shiftHrs:9,  attHrs:7.5, paidBreak:0.5, unpaidBreak:1.0, attHrsPerMonth:142.5 },
+  UK: { name:'United Kingdom',flag:'🇬🇧', daysPerWeek:5, shiftHrs:8,  attHrs:7.5, paidBreak:0.5, unpaidBreak:0,   attHrsPerMonth:137   },
+  US: { name:'United States', flag:'🇺🇸', daysPerWeek:5, shiftHrs:8,  attHrs:7.5, paidBreak:0.5, unpaidBreak:0,   attHrsPerMonth:153   },
+};
+
+// Always read attendance hrs/month directly from the pre-set profile value
+const CTRY_FTE  = Object.fromEntries(Object.entries(CTRY_PROFILE).map(([c,p])=>[c, p.attHrsPerMonth]));
+// ZA→195, IN→148, PH→142.5, UK→137, US→153
+const CTRY_NAME = Object.fromEntries(Object.entries(CTRY_PROFILE).map(([c,p])=>[c, p.name]));
+const CTRY_FLAG = Object.fromEntries(Object.entries(CTRY_PROFILE).map(([c,p])=>[c, p.flag]));
+const MIN_FTE_PER_SHIFT = 3; // no shift/band may be staffed below this
 const LOC_COLORS = ['c1','c2','c3','c4','c5'];
 const LOC_PALETTE = ['#0057FF','#ea580c','#0f766e','#0041CC','#00B87C'];
 
@@ -554,7 +945,7 @@ const ACTIVE_LOCS = Array(N_LOCS).fill(true);
 // Global inputs (shared across all locations in equal mode)
 const GLOBAL = {
   phone:  {vol:0, aht:0},
-  chat:   {vol:0, aht:0, conc:3},
+  chat:   {vol:0, aht:0, conc:1.2},
   email:  {vol:0, aht:0, pct:85, backlog:0},
 };
 // Per-location split percentages
@@ -642,11 +1033,11 @@ function calcPhone(li){
 function calcChat(li){
   const vol    = getVol('chat', li);
   const ahtSec = getAhtSec('chat');
-  const conc   = GLOBAL.chat.conc || 3;
+  const conc   = GLOBAL.chat.conc || 1.2;
   const ftehrs = getFteHrs(li);
   const util   = LOC[li].util / 100;
   const avail  = LOC[li].occ  / 100;
-  if(!vol||!GLOBAL.chat.aht) return {workloadHrs:0,attendanceHrs:0,fte:0,vol,daily:0,ftehrs,util:LOC[li].util,avail:LOC[li].occ};
+  if(!vol||!GLOBAL.chat.aht||!conc) return {workloadHrs:0,attendanceHrs:0,fte:0,vol,daily:0,ftehrs,util:LOC[li].util,avail:LOC[li].occ};
   const r = calcFTE(vol, ahtSec, util, avail, ftehrs);
   const fte = Math.ceil(r.fte / conc);
   return {workloadHrs:r.workloadHrs, attendanceHrs:r.attendanceHrs, fte, vol, daily:vol?Math.round(vol/modays()):0, ftehrs, util:LOC[li].util, avail:LOC[li].occ};
@@ -713,6 +1104,14 @@ function resultBlock(ch, li){
     <div class="result-divider"></div>
     <div class="rp-label">FTE Required</div>
     <div class="rp-fte" id="ir-fte-${pfx}-${li}">—</div>
+    <div class="hoop-fte-row" id="ir-hfte-row-${pfx}-${li}" style="display:none">
+      <div class="hoop-fte-label">📋 HOOP rostering</div>
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <div class="hoop-fte-val" id="ir-hfte-${pfx}-${li}">—</div>
+        <div style="font-size:10px;color:var(--k-muted);font-weight:600">peak shift FTE</div>
+      </div>
+      <div class="hoop-fte-detail" id="ir-hfte-detail-${pfx}-${li}"></div>
+    </div>
   </div>`;
 }
 
@@ -720,9 +1119,13 @@ function locHead(li){
   const l = LOC[li];
   const opts = [['US','🇺🇸 United States'],['UK','🇬🇧 United Kingdom'],['IN','🇮🇳 India'],['PH','🇵🇭 Philippines'],['ZA','🇿🇦 South Africa']];
   const opH = opts.map(([v,lb])=>`<option value="${v}"${v===l.country?' selected':''}>${lb}</option>`).join('');
-  const fteVal = getFteHrs(li);
+  const fteVal   = getFteHrs(li);
   const isCustom = l.customFte !== null;
   const isActive = ACTIVE_LOCS[li];
+  const prof     = CTRY_PROFILE[l.country];
+  const badgeTip = prof
+    ? `${prof.daysPerWeek}d/wk · ${prof.shiftHrs}h shift · ${prof.attHrs}h attendance/day · ${prof.paidBreak}h paid break${prof.unpaidBreak?` · ${prof.unpaidBreak}h unpaid break`:''}`
+    : '';
   return `<div class="card-head" id="ch-head-${li}" style="${!isActive && VOL_MODE==='equal' ? 'opacity:0.45;' : ''}">
     <div class="card-loc-row">
       <span class="card-flag" id="cf-${li}">${CTRY_FLAG[l.country]}</span>
@@ -731,7 +1134,7 @@ function locHead(li){
     </div>
     <select class="card-country-select" id="lc-${li}" onchange="onCountry(${li})">${opH}</select>
     <div class="fte-badge-row">
-      <span class="fte-badge ${isCustom?'fte-badge-custom':''}" id="lfte-${li}">${fteVal} hrs/mo</span>
+      <span class="fte-badge ${isCustom?'fte-badge-custom':''}" id="lfte-${li}" title="${badgeTip}">${fteVal} hrs/mo</span>
       <button class="fte-edit-btn" onclick="toggleFteEdit(${li})" title="Edit FTE hours/month">✏️</button>
     </div>
     <div class="fte-edit-wrap" id="fte-edit-${li}" style="display:none">
@@ -834,6 +1237,37 @@ function renderResults(){
       st(`ir-wh-${pfx}-${i}`, r.workloadHrs   ? r.workloadHrs.toFixed(1)+' h'   : '—');
       st(`ir-ah-${pfx}-${i}`, r.attendanceHrs ? r.attendanceHrs.toFixed(1)+' h' : '—');
       st(`ir-fte-${pfx}-${i}`,r.fte           ? r.fte                            : '—');
+
+      // HOOP-adjusted FTE — band rostering
+      const hoopRow    = g(`ir-hfte-row-${pfx}-${i}`);
+      const hoopValEl  = g(`ir-hfte-${pfx}-${i}`);
+      const hoopDetEl  = g(`ir-hfte-detail-${pfx}-${i}`);
+      const hoopResult = calcHoopFte(ch, i, r);
+      if(hoopRow){
+        if(hoopResult && r.fte){
+          hoopRow.style.display = 'block';
+          if(hoopResult.hoopOnly){
+            // No splits — just show base FTE with context
+            if(hoopValEl) hoopValEl.textContent = hoopResult.totalFte;
+            if(hoopDetEl) hoopDetEl.textContent = hoopResult.note;
+          } else {
+            // Full band breakdown
+            const peakBand = hoopResult.bands.find(b=>!b.warn);
+            if(hoopValEl) hoopValEl.textContent = peakBand ? peakBand.fte : hoopResult.totalFte;
+            if(hoopDetEl){
+              const lines = hoopResult.bands.map(b =>
+                b.warn
+                  ? `${b.label}: ${b.vol.toLocaleString()} chats`
+                  : `${b.label}: ${b.fte} FTE (${b.share}% · ${b.vol.toLocaleString()})`
+              );
+              lines.push(`Total unique headcount: ${hoopResult.totalFte} FTE`);
+              hoopDetEl.innerHTML = lines.join('<br>');
+            }
+          }
+        } else {
+          hoopRow.style.display = 'none';
+        }
+      }
     }
     // Update volume display inside each card
     for(let i=0;i<N_LOCS;i++){
@@ -1068,6 +1502,261 @@ function setVolMode(mode){
   });
   // Re-render cards so active toggle shows in equal mode only
   renderAll();
+}
+
+/* ════════════════════════════════════════════════
+   HOOP (Hours of Operation)
+════════════════════════════════════════════════ */
+function toggleHoop(ch){
+  const panel  = g(`hoop-panel-${ch}`);
+  const btn    = g(`hoop-toggle-${ch}`);
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'flex';
+  btn.classList.toggle('open', !isOpen);
+}
+
+/* Set all days checked + 00:00–00:00 for 24/7 */
+function setHoop247(ch){
+  // Check all day checkboxes
+  document.querySelectorAll(`.hoop-day-cb[data-ch="${ch}"]`).forEach(cb => cb.checked = true);
+  // Set hours to midnight–midnight (= 24h)
+  const openEl = g(`hoop-open-${ch}`); if(openEl) openEl.value = '00:00';
+  const clsEl  = g(`hoop-close-${ch}`); if(clsEl) clsEl.value  = '00:00';
+  // Open the panel so user can see the result
+  const panel = g(`hoop-panel-${ch}`);
+  const btn   = g(`hoop-toggle-${ch}`);
+  if(panel) panel.style.display = 'flex';
+  if(btn)   btn.classList.add('open');
+  onHoopChange(ch);
+}
+
+/* Clear all HOOP fields for a channel */
+function clearHoop(ch){
+  // Uncheck all days except Mon–Fri defaults
+  const defaults = ['Mon','Tue','Wed','Thu','Fri'];
+  document.querySelectorAll(`.hoop-day-cb[data-ch="${ch}"]`).forEach(cb => {
+    cb.checked = defaults.includes(cb.dataset.day);
+  });
+  // Reset times
+  const openEl = g(`hoop-open-${ch}`); if(openEl) openEl.value = ch==='email' ? '08:00' : '08:00';
+  const clsEl  = g(`hoop-close-${ch}`); if(clsEl) clsEl.value  = ch==='email' ? '17:00' : '20:00';
+  const tzEl   = g(`hoop-tz-${ch}`);   if(tzEl)   tzEl.value   = 'CST';
+  // Clear split fields
+  ['wkday','wkend','peak','offpeak'].forEach(f => {
+    const el = g(`hoop-${f}-${ch}`); if(el) el.value = '';
+  });
+  // Clear notes
+  const notes = g(`hoop-notes-${ch}`); if(notes) notes.value = '';
+  // Hide warnings
+  const sw = g(`hoop-split-warn-${ch}`); if(sw) sw.style.display='none';
+  const pw = g(`hoop-peak-warn-${ch}`);  if(pw) pw.style.display='none';
+  // Close panel
+  const panel = g(`hoop-panel-${ch}`);
+  const btn   = g(`hoop-toggle-${ch}`);
+  if(panel) panel.style.display = 'none';
+  if(btn)   btn.classList.remove('open');
+  onHoopChange(ch);
+}
+
+function onHoopChange(ch){
+  updateHoopSummary(ch);
+  calcAll();
+}
+
+function onHoopSplit(ch){
+  const wkday   = parseFloat(g(`hoop-wkday-${ch}`)?.value)   || 0;
+  const wkend   = parseFloat(g(`hoop-wkend-${ch}`)?.value)   || 0;
+  const peak    = parseFloat(g(`hoop-peak-${ch}`)?.value)    || 0;
+  const offpeak = parseFloat(g(`hoop-offpeak-${ch}`)?.value) || 0;
+  const warnEl = g(`hoop-split-warn-${ch}`);
+  const pkWarn = g(`hoop-peak-warn-${ch}`);
+  if(warnEl) warnEl.style.display = (wkday||wkend) && Math.round(wkday+wkend)!==100 ? 'flex':'none';
+  if(pkWarn) pkWarn.style.display = (peak||offpeak) && Math.round(peak+offpeak)!==100 ? 'flex':'none';
+  onHoopChange(ch);
+}
+
+/* ════════════════════════════════════════════════
+   HOOP-AWARE FTE — CORRECT SHIFT-BAND ROSTERING
+   ─────────────────────────────────────────────
+   Principle:
+   • HOOP does NOT reduce total headcount needed.
+   • It tells you HOW to distribute that headcount across shift bands.
+   • Each band is staffed independently; minimum 3 FTE per active band.
+   • Total unique headcount = sum of all band FTEs (may exceed base FTE
+     due to min-staffing floors and rounding per band).
+   • Base FTE (no HOOP) is always shown as the flat-coverage reference.
+
+   Formula per band:
+     Band volume    = total vol × band share
+     Workload hrs   = (band vol × AHT_sec) / 3600
+     Attendance hrs = (workload / (1−util)) / (1−avail)
+     Raw FTE        = ceil(attendance hrs / country att hrs/mo)
+     Band FTE       = max( ceil(raw FTE / concurrency), MIN_FTE_PER_SHIFT )
+════════════════════════════════════════════════ */
+function getHoopData(ch){
+  const days = Array.from(document.querySelectorAll(`.hoop-day-cb[data-ch="${ch}"]`))
+    .filter(cb=>cb.checked).map(cb=>cb.dataset.day);
+  const open  = g(`hoop-open-${ch}`)?.value  || '';
+  const close = g(`hoop-close-${ch}`)?.value || '';
+  const wkdayPct   = parseFloat(g(`hoop-wkday-${ch}`)?.value)   || null;
+  const wkendPct   = parseFloat(g(`hoop-wkend-${ch}`)?.value)   || null;
+  const peakPct    = parseFloat(g(`hoop-peak-${ch}`)?.value)    || null;
+  const offpeakPct = parseFloat(g(`hoop-offpeak-${ch}`)?.value) || null;
+
+  const hasSplits = wkdayPct!==null || wkendPct!==null || peakPct!==null || offpeakPct!==null;
+  const hasTime   = !!(open && close);
+  const hasDays   = days.length > 0;
+  if(!hasSplits && !hasTime && !hasDays) return null;
+
+  // Operating hours per day
+  let dailyOpHrs = 9; // default 09:00–18:00
+  if(hasTime){
+    const [oh,om] = open.split(':').map(Number);
+    const [ch2,cm] = close.split(':').map(Number);
+    const openMins  = oh*60+om;
+    const closeMins = ch2*60+cm;
+    dailyOpHrs = (openMins===0 && closeMins===0) ? 24
+      : closeMins > openMins ? (closeMins-openMins)/60
+      : (1440-openMins+closeMins)/60;
+  }
+
+  const daysPerWeek  = hasDays ? days.length : 5;
+  const weekendDays  = ['Sat','Sun'].filter(d=>days.includes(d)).length;
+  const weekdayDays  = daysPerWeek - weekendDays;
+
+  return { days, daysPerWeek, weekdayDays, weekendDays,
+           dailyOpHrs, wkdayPct, wkendPct, peakPct, offpeakPct, hasSplits };
+}
+
+function calcBandFte(bandVol, ahtSec, util, avail, ftehrs, conc){
+  if(!bandVol || !ahtSec) return 0;
+  const workload = (bandVol * ahtSec) / 3600;
+  const attHrs   = (workload / (1-util)) / (1-avail);
+  const rawFte   = Math.ceil(attHrs / ftehrs);
+  const fte      = Math.ceil(rawFte / conc);
+  return Math.max(fte, MIN_FTE_PER_SHIFT);
+}
+
+function calcHoopFte(ch, li, baseResult){
+  const hoop = getHoopData(ch);
+  if(!hoop || !baseResult.vol) return null;
+
+  const vol    = baseResult.vol;
+  const ahtSec = getAhtSec(ch);
+  const ftehrs = getFteHrs(li);
+  const util   = LOC[li].util / 100;
+  const avail  = LOC[li].occ  / 100;
+  const conc   = ch==='chat' ? (GLOBAL.chat.conc||1.2) : 1;
+
+  const { wkdayPct, wkendPct, peakPct, offpeakPct, hasSplits,
+          weekdayDays, weekendDays, dailyOpHrs, daysPerWeek } = hoop;
+
+  // ── No volume splits — just show context, return base FTE unchanged ──
+  if(!hasSplits){
+    return {
+      bands: [],
+      totalFte: baseResult.fte,
+      peakFte: baseResult.fte,
+      note: `${daysPerWeek}d/wk · ${dailyOpHrs===24?'24h':dailyOpHrs+'h'}/day · base FTE applies`,
+      hoopOnly: true
+    };
+  }
+
+  // ── Resolve splits with sensible defaults ──
+  // Weekday/weekend: if only one side given, infer the other
+  const wd = wkdayPct!==null ? wkdayPct/100 : (wkendPct!==null ? (100-wkendPct)/100 : 1.0);
+  const we = wkendPct!==null ? wkendPct/100 : (wkdayPct!==null ? (100-wkdayPct)/100 : 0.0);
+  // Peak/off-peak: if only one side given, infer the other
+  const pk = peakPct!==null    ? peakPct/100    : (offpeakPct!==null ? (100-offpeakPct)/100 : 1.0);
+  const op = offpeakPct!==null ? offpeakPct/100 : (peakPct!==null    ? (100-peakPct)/100    : 0.0);
+
+  const hasWeekend = weekendDays > 0;
+  const bands = [];
+
+  // Helper: compute and push a band
+  const addBand = (label, share, warn=false) => {
+    const bandVol = Math.round(vol * share);
+    if(share <= 0) return;
+    if(warn){
+      bands.push({ label, vol:bandVol, fte:0, share:Math.round(share*100), warn:true });
+      return;
+    }
+    const fte = calcBandFte(bandVol, ahtSec, util, avail, ftehrs, conc);
+    bands.push({ label, vol:bandVol, fte, share:Math.round(share*100) });
+  };
+
+  addBand('Weekday peak',      wd * pk);
+  if(op > 0) addBand('Weekday off-peak', wd * op);
+
+  if(hasWeekend){
+    if(we > 0) addBand('Weekend peak',     we * pk);
+    if(we > 0 && op > 0) addBand('Weekend off-peak',  we * op);
+  } else if(we > 0){
+    // User entered weekend % but HOOP has no weekend days — flag it
+    addBand(`⚠ Weekend vol — no weekend days in HOOP`, we, true);
+  }
+
+  const totalFte = bands.reduce((s,b)=>s+(b.fte||0), 0);
+  const peakFte  = bands.find(b=>!b.warn)?.fte ?? baseResult.fte;
+
+  return {
+    bands,
+    totalFte,
+    peakFte,
+    note: `${daysPerWeek}d/wk · ${dailyOpHrs===24?'24h':dailyOpHrs+'h'}/day`,
+    hoopOnly: false
+  };
+}
+
+function updateHoopSummary(ch){
+  const summaryEl = g(`hoop-summary-${ch}`);
+  if(!summaryEl) return;
+  const chips = [];
+
+  const days = Array.from(document.querySelectorAll(`.hoop-day-cb[data-ch="${ch}"]`))
+    .filter(cb=>cb.checked).map(cb=>cb.dataset.day);
+
+  if(days.length===7){ chips.push(`📅 7 days / week`); }
+  else if(days.length>0){ chips.push(`📅 ${days.join(', ')}`); }
+
+  const open  = g(`hoop-open-${ch}`)?.value;
+  const close = g(`hoop-close-${ch}`)?.value;
+  const tz    = g(`hoop-tz-${ch}`)?.value||'';
+  if(open && close){
+    const [oh] = open.split(':').map(Number);
+    const [ch2] = close.split(':').map(Number);
+    const hrs = ch2===oh ? 24 : ch2>oh ? ch2-oh : 24-oh+ch2;
+    const label = (open==='00:00'&&close==='00:00') ? '24h (24/7)' : `${fmtTime(open)}–${fmtTime(close)} ${tz} (${hrs}h)`;
+    chips.push(`🕐 ${label}`);
+  }
+
+  const wkday   = g(`hoop-wkday-${ch}`)?.value;
+  const wkend   = g(`hoop-wkend-${ch}`)?.value;
+  const peak    = g(`hoop-peak-${ch}`)?.value;
+  const offpeak = g(`hoop-offpeak-${ch}`)?.value;
+  if(wkday||wkend)   chips.push(`📊 Wkday ${wkday||'?'}% / Wkend ${wkend||'?'}%`);
+  if(peak||offpeak)  chips.push(`⚡ Peak ${peak||'?'}% / Off-peak ${offpeak||'?'}%`);
+
+  const notes = g(`hoop-notes-${ch}`)?.value?.trim();
+  if(notes) chips.push(`📝 ${notes.length>40?notes.slice(0,40)+'…':notes}`);
+
+  summaryEl.innerHTML = chips.length
+    ? chips.map(c=>`<span class="hoop-chip">${c}</span>`).join('') : '';
+
+  // Show/hide clear button
+  const clearBtn = g(`hoop-clear-${ch}`);
+  if(clearBtn) clearBtn.style.display = chips.length ? 'flex' : 'none';
+
+  const noteEl = g(`hoop-note-${ch}`);
+  if(noteEl) noteEl.textContent = chips.length ? `${chips.length} field${chips.length>1?'s':''} configured` : '';
+}
+
+function fmtTime(t){
+  if(!t) return '';
+  const [h,m] = t.split(':').map(Number);
+  const ampm = h>=12?'PM':'AM';
+  const h12  = h%12||12;
+  return `${h12}:${String(m).padStart(2,'0')} ${ampm}`;
 }
 
 /* ════════════════════════════════════════════════
