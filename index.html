@@ -39,7 +39,7 @@
   --c3:#0f766e;   --c3l:#f0fdfa;   --c3b:#99f6e4;
   --c4:#0041CC;   --c4l:#E8F0FF;   --c4b:#93b8ff;
   --c5:#00B87C;   --c5l:#e6faf4;   --c5b:#6de8c2;
-  --header-h:58px; --tabbar-h:48px; --footer-h:64px;
+  --erlang-c:#7c3aed; --erlang-l:#f5f3ff; --erlang-b:#c4b5fd; --erlang-m:#ede9fe;
   --font:'Plus Jakarta Sans',sans-serif; --mono:'JetBrains Mono',monospace;
   --sh: 0 1px 3px rgba(0,0,0,.07),0 4px 12px rgba(0,0,0,.06);
   --shm:0 4px 16px rgba(0,87,255,.12);
@@ -71,10 +71,16 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 .tab-btn.active.ph{color:var(--phone-c);border-bottom-color:var(--phone-c)}
 .tab-btn.active.ch{color:var(--chat-c);border-bottom-color:var(--chat-c)}
 .tab-btn.active.em{color:var(--email-c);border-bottom-color:var(--email-c)}
+.tab-btn.active.ec{color:var(--erlang-c);border-bottom-color:var(--erlang-c);background:var(--erlang-l)}
+.tab-btn.ec{color:var(--erlang-c);font-weight:700}
+.tab-btn.ec:hover{color:#6d28d9;background:var(--erlang-l)}
+.tab-btn.ec .tab-ec-label{background:var(--erlang-m);border:1.5px solid var(--erlang-b);color:var(--erlang-c);border-radius:6px;padding:2px 9px;font-weight:700;font-size:11px;letter-spacing:.1px;transition:background .15s}
+.tab-btn.ec:hover .tab-ec-label,.tab-btn.active.ec .tab-ec-label{background:#ddd6fe;border-color:var(--erlang-c)}
 .tab-pip{font-family:var(--mono);font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px;background:var(--page);color:var(--ink3);transition:all .15s}
 .tab-btn.active.ph .tab-pip{background:#e0f2fe;color:var(--phone-c)}
 .tab-btn.active.ch .tab-pip{background:#ede9fe;color:var(--chat-c)}
 .tab-btn.active.em .tab-pip{background:#d1fae5;color:var(--email-c)}
+.tab-btn.active.ec .tab-pip{background:var(--erlang-m);color:var(--erlang-c)}
 .tabbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
 .vol-toggle{display:flex;background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:3px;gap:2px}
 .vt-btn{padding:4px 13px;border-radius:5px;border:none;background:transparent;font-family:var(--font);font-size:11px;font-weight:600;color:var(--ink3);cursor:pointer;transition:all .15s}
@@ -222,9 +228,10 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 .shrink-label.util{color:#0057FF}
 .shrink-label.avail{color:#0041CC}
 .shrink-input-wrap{display:flex;align-items:center;gap:4px}
-.shrink-input{width:50px;background:var(--white);border:1.5px solid var(--border);border-radius:6px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ink);padding:4px 8px;outline:none;-moz-appearance:textfield;text-align:right;transition:border-color .15s}
+.shrink-input{width:50px;background:var(--white);border:1.5px solid var(--border2);border-radius:6px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ink);padding:4px 8px;outline:none;-moz-appearance:textfield;text-align:right;transition:border-color .15s,box-shadow .15s;cursor:text}
 .shrink-input::-webkit-outer-spin-button,.shrink-input::-webkit-inner-spin-button{-webkit-appearance:none}
-.shrink-input:focus{border-color:var(--border2)}
+.shrink-input:hover{border-color:var(--k-blue);background:#f0f5ff}
+.shrink-input:focus{border-color:var(--k-blue);box-shadow:0 0 0 3px rgba(0,87,255,.12);background:#fff}
 .shrink-pct{font-size:11px;color:var(--ink4);width:10px}
 .shrink-bar{height:5px;border-radius:3px;background:var(--border);overflow:hidden;position:relative;margin-bottom:7px}
 .shrink-bar-u{position:absolute;left:0;top:0;height:100%;background:#0057FF;border-radius:3px;transition:width .3s}
@@ -412,6 +419,21 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 .hoop-fte-val{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--k-blue);line-height:1;}
 .hoop-fte-detail{font-size:10px;color:var(--k-text2);margin-top:3px;line-height:1.4;}
 
+/* ── EQUAL MODE DISCLAIMER ───────────────────────── */
+.eq-disclaimer{
+  display:none;background:#fffbeb;border-bottom:1px solid #fde68a;
+  padding:9px 24px;font-size:11px;color:#92400e;font-weight:500;
+  align-items:center;gap:8px;flex-shrink:0;
+}
+.eq-disclaimer.show{display:flex}
+.eq-disclaimer strong{font-weight:700}
+/* ── 24/7 SPLIT NUDGE ────────────────────────────── */
+.hoop-247-nudge{
+  display:none;margin:10px 0 0;padding:8px 12px;
+  background:#fef3c7;border:1px solid #fbbf24;border-radius:7px;
+  font-size:11px;color:#92400e;font-weight:600;line-height:1.5;
+}
+.hoop-247-nudge.show{display:flex;align-items:flex-start;gap:7px}
 /* ── HOME BUTTON ─────────────────────────────────────── */
 .home-btn{
   display:flex;align-items:center;justify-content:center;
@@ -443,8 +465,128 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 .hm-btn-ok:hover{background:#d4e4ff;}
 .hm-btn-home{background:var(--k-blue);color:#fff;}
 .hm-btn-home:hover{background:var(--k-blue2);}
+/* ── ERLANG C CARDS ──────────────────────────────── */
+/* View background */
+#view-erlang{background:var(--erlang-l)}
+/* Input strip */
+#gs-erlang{background:var(--erlang-m);border-bottom:2px solid var(--erlang-b)}
+#gs-erlang .gs-label{color:var(--erlang-c)}
+#gs-erlang .gs-unit{color:var(--erlang-c);opacity:.7}
+#gs-erlang .gs-input{border-color:var(--erlang-b);background:#fff}
+#gs-erlang .gs-input:focus{border-color:var(--erlang-c);box-shadow:0 0 0 3px rgba(124,58,237,.12)}
+#gs-erlang .vol-period-sel{background:var(--erlang-c)}
+#gs-erlang .vol-period-sel:hover{background:#6d28d9}
+#gs-erlang .gs-info{color:var(--erlang-c);opacity:.75}
+/* Cards */
+.ec-card{flex:1;min-width:200px;max-width:250px;background:var(--white);border:1px solid var(--erlang-b);border-radius:12px;box-shadow:0 1px 3px rgba(124,58,237,.1),0 4px 12px rgba(124,58,237,.08);overflow:hidden}
+.ec-card.c1{border-top:3px solid var(--c1)}.ec-card.c2{border-top:3px solid var(--c2)}.ec-card.c3{border-top:3px solid var(--c3)}.ec-card.c4{border-top:3px solid var(--c4)}.ec-card.c5{border-top:3px solid var(--c5)}
+.ec-head{padding:12px 14px;background:var(--erlang-m);border-bottom:1px solid var(--erlang-b)}
+.ec-loc-name{font-size:13px;font-weight:700;color:var(--ink)}
+.ec-loc-country{font-size:11px;color:var(--erlang-c);margin-top:2px;font-weight:500}
+.ec-body{padding:14px}
+.ec-row{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;margin-bottom:5px}
+.ec-lbl{color:var(--ink4);font-weight:500}
+.ec-val{font-family:var(--mono);font-weight:600;color:var(--ink3);font-size:11px}
+.ec-divider{height:1px;background:var(--erlang-b);margin:10px 0 8px;opacity:.5}
+.ec-fte-lbl{font-size:10px;font-weight:700;color:var(--erlang-c);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
+.ec-fte{font-family:var(--mono);font-size:28px;font-weight:700;line-height:1;color:var(--erlang-c)}
+.ec-sl-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-top:6px}
+.ec-sl-badge.ok{background:#d1fae5;color:#065f46}.ec-sl-badge.warn{background:#fef3c7;color:#92400e}.ec-sl-badge.err{background:#fee2e2;color:#991b1b}
+.ec-vs-workload{margin-top:6px;font-size:10px;color:var(--erlang-c);opacity:.7;font-family:var(--mono)}
+/* Erlang C FTE highlight box — violet */
+.ec-fte-box{margin-top:10px;padding:10px 12px;background:linear-gradient(135deg,var(--erlang-m) 0%,#ddd6fe 100%);border:2px solid var(--erlang-c);border-radius:10px}
+.ec-fte-box-lbl{font-size:9px;font-weight:800;color:var(--erlang-c);letter-spacing:.8px;text-transform:uppercase;margin-bottom:2px}
+.ec-fte-box-val{font-family:var(--mono);font-size:32px;font-weight:800;color:var(--erlang-c);line-height:1}
+.ec-fte-box-sub{font-size:10px;color:var(--erlang-c);margin-top:4px;line-height:1.4;opacity:.8}
+.ec-occ-pill{font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:#fff3cd;color:#856404;border:1px solid #ffc107}
+.ec-occ-pill.safe{background:#d1fae5;color:#065f46;border-color:#6ee7b7}
+.ec-occ-pill.warn{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+/* Info box inside Erlang view */
+#view-erlang .ec-info-box{background:#ede9fe;border:1px solid var(--erlang-b);border-radius:10px}
+/* Headcount warning banner */
+.hc-warn-banner{display:none;margin-top:8px;padding:7px 10px;background:#fffbeb;border:1px solid #fde68a;border-radius:7px;font-size:10px;color:#92400e;font-weight:600;line-height:1.5}
+.hc-warn-banner.show{display:block}
+/* ── HELP BUTTON ─────────────────────────────────── */
+.help-btn{
+  display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);
+  border:1.5px solid rgba(255,255,255,.3);border-radius:20px;
+  padding:5px 13px 5px 10px;color:#fff;font-size:11px;font-weight:700;
+  cursor:pointer;transition:background .15s,border-color .15s;letter-spacing:.2px;
+  white-space:nowrap;
+}
+.help-btn:hover{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.5)}
+.help-btn svg{flex-shrink:0}
+
+/* ── GUIDE MODAL ─────────────────────────────────── */
+.guide-overlay{
+  display:none;position:fixed;inset:0;background:rgba(10,10,30,.55);
+  z-index:1000;align-items:center;justify-content:center;padding:20px;
+  backdrop-filter:blur(3px);
+}
+.guide-overlay.open{display:flex}
+.guide-modal{
+  background:#fff;border-radius:18px;
+  box-shadow:0 24px 80px rgba(0,0,0,.22);
+  width:100%;max-width:780px;max-height:88vh;
+  display:flex;flex-direction:column;overflow:hidden;
+}
+/* header band */
+.gm-head{
+  background:linear-gradient(135deg,#1211E6 0%,#4338ca 100%);
+  padding:24px 28px 20px;color:#fff;flex-shrink:0;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+}
+.gm-head-left{flex:1}
+.gm-pretitle{font-size:10px;font-weight:700;letter-spacing:1.2px;opacity:.7;text-transform:uppercase;margin-bottom:4px}
+.gm-title{font-size:22px;font-weight:800;line-height:1.2;margin-bottom:6px}
+.gm-subtitle{font-size:12px;opacity:.8;line-height:1.5}
+.gm-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+.gm-close:hover{background:rgba(255,255,255,.3)}
+/* progress dots */
+.gm-dots{display:flex;gap:6px;padding:14px 28px 0;flex-shrink:0;background:#fff}
+.gm-dot{height:4px;border-radius:2px;background:#e5e7eb;transition:all .25s;cursor:pointer}
+.gm-dot.active{background:#1211E6;width:24px !important}
+.gm-dot:not(.active){width:8px}
+/* content area */
+.gm-body{flex:1;overflow-y:auto;padding:20px 28px 10px}
+/* slide */
+.gm-slide{display:none}
+.gm-slide.active{display:block}
+.gm-slide-icon{font-size:32px;margin-bottom:8px}
+.gm-slide-title{font-size:16px;font-weight:800;color:#1e1b4b;margin-bottom:6px}
+.gm-slide-desc{font-size:12px;color:#4b5563;line-height:1.7;margin-bottom:14px}
+/* feature grid */
+.gm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.gm-card{background:#f8faff;border:1px solid #e0e7ff;border-radius:10px;padding:12px 14px}
+.gm-card-icon{font-size:18px;margin-bottom:4px}
+.gm-card-title{font-size:11px;font-weight:700;color:#1e1b4b;margin-bottom:3px}
+.gm-card-body{font-size:11px;color:#6b7280;line-height:1.55}
+/* step list */
+.gm-steps{list-style:none;padding:0;margin:0 0 14px;display:flex;flex-direction:column;gap:8px}
+.gm-step{display:flex;gap:12px;align-items:flex-start}
+.gm-step-num{width:22px;height:22px;border-radius:50%;background:#1211E6;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.gm-step-body{flex:1}
+.gm-step-title{font-size:12px;font-weight:700;color:#1e1b4b;margin-bottom:1px}
+.gm-step-desc{font-size:11px;color:#6b7280;line-height:1.55}
+/* tip box */
+.gm-tip{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 13px;font-size:11px;color:#92400e;line-height:1.6;margin-bottom:12px;display:flex;gap:8px}
+.gm-tip-icon{flex-shrink:0;font-size:14px}
+/* erlang highlight */
+.gm-erlang-band{background:var(--erlang-m,#f5f3ff);border:1.5px solid var(--erlang-b,#c4b5fd);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.gm-erlang-title{font-size:12px;font-weight:800;color:var(--erlang-c,#7c3aed);margin-bottom:4px}
+.gm-erlang-body{font-size:11px;color:#4b5563;line-height:1.6}
+/* footer */
+.gm-footer{display:flex;align-items:center;justify-content:space-between;padding:14px 28px 20px;flex-shrink:0;border-top:1px solid #f3f4f6;background:#fff}
+.gm-counter{font-size:11px;color:#9ca3af;font-weight:600}
+.gm-nav{display:flex;gap:8px}
+.gm-btn{padding:8px 18px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;border:none}
+.gm-btn-prev{background:#f3f4f6;color:#374151}
+.gm-btn-prev:hover{background:#e5e7eb}
+.gm-btn-next{background:#1211E6;color:#fff}
+.gm-btn-next:hover{background:#0f0ec4}
+.gm-btn-done{background:#059669;color:#fff}
+.gm-btn-done:hover{background:#047857}
 </style>
-</head>
 <body>
 
 <div class="header">
@@ -456,9 +598,174 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
     <div><div class="logo-text">RFP Sizing Calculator</div><div class="logo-sub">ESM Multi Location</div></div>
   </div>
   <div class="header-right">
+    <button class="help-btn" onclick="openGuide()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      How to use
+    </button>
     <div class="shrink-pill">Shrinkage: <strong id="tb-shrink">30%</strong> <span id="tb-shrink-detail" style="color:rgba(255,255,255,.5)">(10% util + 20% avail)</span></div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════
+     HOW TO USE GUIDE MODAL
+════════════════════════════════════════════════════ -->
+<div class="guide-overlay" id="guideOverlay" onclick="onGuideOverlayClick(event)">
+  <div class="guide-modal" id="guideModal">
+
+    <!-- Header band -->
+    <div class="gm-head">
+      <div class="gm-head-left">
+        <div class="gm-pretitle">ESM Multi Location RFP Sizing Calculator</div>
+        <div class="gm-title">How to use this tool</div>
+        <div class="gm-subtitle">A step-by-step guide to sizing your contact centre workforce accurately</div>
+      </div>
+      <button class="gm-close" onclick="closeGuide()">✕</button>
+    </div>
+
+    <!-- Progress dots -->
+    <div class="gm-dots" id="gm-dots"></div>
+
+    <!-- Slide content -->
+    <div class="gm-body">
+
+      <!-- SLIDE 1: What is this tool? -->
+      <div class="gm-slide active" id="gm-slide-0">
+        <div class="gm-slide-icon">🎯</div>
+        <div class="gm-slide-title">What does this tool do?</div>
+        <div class="gm-slide-desc">The RFP Sizing Calculator helps you calculate the <strong>number of Full-Time Equivalents (FTE)</strong> needed to handle a given contact volume across multiple locations and channels. It accounts for real-world factors like shrinkage, shift patterns, and operating hours — so your headcount estimates are grounded in operational reality, not just raw workload maths.</div>
+        <div class="gm-grid">
+          <div class="gm-card">
+            <div class="gm-card-icon">📞</div>
+            <div class="gm-card-title">Phone</div>
+            <div class="gm-card-body">Volume in calls/month with AHT in seconds or minutes. Supports HOOP shift bands and peak/off-peak splits.</div>
+          </div>
+          <div class="gm-card">
+            <div class="gm-card-icon">💬</div>
+            <div class="gm-card-title">Chat</div>
+            <div class="gm-card-body">Same as phone, plus a concurrency multiplier (default 1.2) which divides the FTE requirement by the average simultaneous chats per agent.</div>
+          </div>
+          <div class="gm-card">
+            <div class="gm-card-icon">✉️</div>
+            <div class="gm-card-title">Email</div>
+            <div class="gm-card-body">Async channel. Supports a target response SLA % and a backlog buffer to account for queued work beyond the day's arrivals.</div>
+          </div>
+          <div class="gm-card">
+            <div class="gm-card-icon">📊</div>
+            <div class="gm-card-title">Summary</div>
+            <div class="gm-card-body">Cross-channel view showing all locations, workload hours, attendance hours, FTE, and monthly contracted hours in one table.</div>
+          </div>
+        </div>
+        <div class="gm-tip"><div class="gm-tip-icon">💡</div><div>This tool does <strong>not</strong> save data automatically. Always copy or screenshot your results before leaving the page.</div></div>
+      </div>
+
+      <!-- SLIDE 2: Locations & Volume Mode -->
+      <div class="gm-slide" id="gm-slide-1">
+        <div class="gm-slide-icon">🌍</div>
+        <div class="gm-slide-title">Locations & Volume Mode</div>
+        <div class="gm-slide-desc">The tool supports up to <strong>5 locations</strong> across Philippines, India, South Africa, USA, and UK. Each location carries its own contracted hours/month, shift length, and shrinkage profile. You control how volume is distributed using the toggle in the top-right of each channel tab.</div>
+        <ul class="gm-steps">
+          <li class="gm-step"><div class="gm-step-num">1</div><div class="gm-step-body"><div class="gm-step-title">⚖ Equal volumes</div><div class="gm-step-desc">The same total volume is sent to every active location. Use this when you haven't yet decided on a location split. <strong>Important:</strong> deselect locations that are not in scope using the ✓ toggle on their card — otherwise their FTE will be overcounted.</div></div></li>
+          <li class="gm-step"><div class="gm-step-num">2</div><div class="gm-step-body"><div class="gm-step-title">↗ Split volumes</div><div class="gm-step-desc">Assign a percentage of total volume to each location (must sum to 100%). Use this when you have a defined routing strategy, e.g. 60% PH / 40% IN.</div></div></li>
+        </ul>
+        <div class="gm-tip"><div class="gm-tip-icon">⚠️</div><div>In <strong>Equal volumes mode</strong>, all 5 locations receive the full volume by default. Always deactivate locations not in scope — the amber banner at the top of the channel view is your reminder.</div></div>
+      </div>
+
+      <!-- SLIDE 3: Shrinkage (Util & Availability) -->
+      <div class="gm-slide" id="gm-slide-2">
+        <div class="gm-slide-icon">📉</div>
+        <div class="gm-slide-title">Shrinkage — Utilisation & Availability</div>
+        <div class="gm-slide-desc">Shrinkage accounts for the gap between an agent being <em>scheduled</em> and being <em>available to handle contacts</em>. It is split into two components, both editable on each location card.</div>
+        <ul class="gm-steps">
+          <li class="gm-step"><div class="gm-step-num">1</div><div class="gm-step-body"><div class="gm-step-title">Utilisation % (default 10%)</div><div class="gm-step-desc">Time lost to non-productive scheduled activities — team meetings, coaching, training, system downtime. Applied first in the formula: <strong>Attendance hrs = Workload hrs ÷ (1 − Util)</strong></div></div></li>
+          <li class="gm-step"><div class="gm-step-num">2</div><div class="gm-step-body"><div class="gm-step-title">Availability % (default 20%)</div><div class="gm-step-desc">Time lost to unplanned absence — sick leave, attrition buffer, late arrivals. Applied second: <strong>Attendance hrs ÷ (1 − Availability)</strong></div></div></li>
+          <li class="gm-step"><div class="gm-step-num">3</div><div class="gm-step-body"><div class="gm-step-title">Combined Shrinkage</div><div class="gm-step-desc">At defaults (10% + 20%), total shrinkage = ~28%. Shown in the top-right pill of the header. Click any % field on a location card to edit it.</div></div></li>
+        </ul>
+        <div class="gm-tip"><div class="gm-tip-icon">💡</div><div>Industry benchmarks: Utilisation 8–15%, Availability 15–25%. Higher shrinkage = more FTE required. Lowering shrinkage improves efficiency on paper but increases risk.</div></div>
+      </div>
+
+      <!-- SLIDE 4: HOOP — Operating Hours & Shift Bands -->
+      <div class="gm-slide" id="gm-slide-3">
+        <div class="gm-slide-icon">🕐</div>
+        <div class="gm-slide-title">HOOP — Hours of Operation</div>
+        <div class="gm-slide-desc">The HOOP panel (expandable below each channel's input strip) lets you define <strong>when</strong> your operation runs. This converts the base workload FTE into a <strong>unique headcount</strong> that accounts for shift rotation and coverage patterns.</div>
+        <ul class="gm-steps">
+          <li class="gm-step"><div class="gm-step-num">1</div><div class="gm-step-body"><div class="gm-step-title">Operating days & hours</div><div class="gm-step-desc">Select which days of the week are staffed and set open/close times. Use the <strong>24/7</strong> shortcut for round-the-clock operations.</div></div></li>
+          <li class="gm-step"><div class="gm-step-num">2</div><div class="gm-step-body"><div class="gm-step-title">Shift rotation multiplier</div><div class="gm-step-desc">If your operating window is longer than the country's standard shift (e.g. 12h window ÷ 9h PH shift = 2 rotations), the tool automatically multiplies FTE to give the correct unique headcount.</div></div></li>
+          <li class="gm-step"><div class="gm-step-num">3</div><div class="gm-step-body"><div class="gm-step-title">Weekday / Weekend splits</div><div class="gm-step-desc">Enter the % of volume handled on weekdays vs weekends. The tool calculates each band's FTE independently and sums to a total unique headcount. <strong>Required for 24/7 operations.</strong></div></div></li>
+          <li class="gm-step"><div class="gm-step-num">4</div><div class="gm-step-body"><div class="gm-step-title">Peak / Off-peak splits</div><div class="gm-step-desc">For operations with a defined busy period (e.g. 70% peak, 30% off-peak), these bands are staffed independently with a minimum of 3 FTE per active band.</div></div></li>
+        </ul>
+        <div class="gm-tip"><div class="gm-tip-icon">⚠️</div><div>For 24/7 coverage with weekend staffing, always enter Weekday % and Weekend % — the tool will prompt you if these are missing.</div></div>
+      </div>
+
+      <!-- SLIDE 5: FTE vs Unique Headcount -->
+      <div class="gm-slide" id="gm-slide-4">
+        <div class="gm-slide-icon">👥</div>
+        <div class="gm-slide-title">FTE vs Unique Headcount — What's the Difference?</div>
+        <div class="gm-slide-desc">This is one of the most important distinctions in workforce sizing. The two numbers answer different questions.</div>
+        <div class="gm-grid">
+          <div class="gm-card">
+            <div class="gm-card-icon">📋</div>
+            <div class="gm-card-title">Base FTE (workload)</div>
+            <div class="gm-card-body">How many full-time agents' worth of work exists, accounting for shrinkage. This is the <em>minimum</em> if everyone worked the same shift with no rotation.</div>
+          </div>
+          <div class="gm-card" style="border-color:#fde68a;background:#fffbeb">
+            <div class="gm-card-icon">🧑‍🤝‍🧑</div>
+            <div class="gm-card-title">Unique Headcount (HOOP)</div>
+            <div class="gm-card-body">How many <em>individual people</em> you need to hire, once you account for shift rotations, band splits, and minimum staffing floors. Always ≥ base FTE.</div>
+          </div>
+        </div>
+        <ul class="gm-steps">
+          <li class="gm-step"><div class="gm-step-num">!</div><div class="gm-step-body"><div class="gm-step-title">When to use which</div><div class="gm-step-desc">Use <strong>Base FTE</strong> for capacity planning and commercial proposals. Use <strong>Unique Headcount</strong> for hiring plans, seat counts, and operational budgeting. When an amber warning appears on a card, it means unique headcount exceeds base FTE — <strong>hire to the higher number.</strong></div></div></li>
+        </ul>
+        <div class="gm-tip"><div class="gm-tip-icon">💡</div><div>Example: 660 calls/month, 5.5 min AHT, Mon–Fri 08:00–20:00 at a PH site → Base FTE = 1, but 12h window ÷ 9h shift = 2 rotations → <strong>Unique HC = 2.</strong> You cannot staff a 12-hour window with one person.</div></div>
+      </div>
+
+      <!-- SLIDE 6: Erlang C -->
+      <div class="gm-slide" id="gm-slide-5">
+        <div class="gm-slide-icon">🔢</div>
+        <div class="gm-slide-title">Erlang C — Queue-Based Staffing</div>
+        <div class="gm-slide-desc">The <span style="background:var(--erlang-m,#f5f3ff);color:var(--erlang-c,#7c3aed);padding:1px 7px;border-radius:4px;font-weight:700;font-size:11px">🔢 Erlang C</span> tab provides a second, independent view of your staffing requirement using a queuing model — more appropriate for real-time channels like phone and chat.</div>
+        <div class="gm-erlang-band">
+          <div class="gm-erlang-title">Why Erlang C gives a higher FTE than simple workload</div>
+          <div class="gm-erlang-body">Simple workload assumes contacts arrive smoothly and evenly. In reality, calls arrive randomly. Erlang C models this randomness and calculates the agents needed so that <strong>X% of contacts are answered within Y seconds</strong> (your service level target). It typically adds 10–30% more agents than workload FTE.</div>
+        </div>
+        <ul class="gm-steps">
+          <li class="gm-step"><div class="gm-step-num">1</div><div class="gm-step-body"><div class="gm-step-title">Set your service level target</div><div class="gm-step-desc">Default is 80% of contacts answered within 20 seconds — a common industry benchmark. Adjust to match your SLA.</div></div></li>
+          <li class="gm-step"><div class="gm-step-num">2</div><div class="gm-step-body"><div class="gm-step-title">Occupancy is a calculated output</div><div class="gm-step-desc">Erlang C calculates occupancy (A/N) for you — it is not an input. The <strong>Occ Cap</strong> is a safety ceiling. Raising it allows fewer agents (higher burnout risk); lowering it forces more agents.</div></div></li>
+          <li class="gm-step"><div class="gm-step-num">3</div><div class="gm-step-body"><div class="gm-step-title">Use Erlang C for commercial SLA commitments</div><div class="gm-step-desc">If you're bidding on a contract with a defined SLA (e.g. "80/20"), use the Erlang C FTE in your commercial model, not the workload FTE. The delta vs workload is shown on each location card.</div></div></li>
+        </ul>
+        <div class="gm-tip"><div class="gm-tip-icon">📧</div><div>Email does not queue — Erlang C does not apply. The Email card in Erlang C view uses a workload + SL-buffer approach as a conservative estimate only.</div></div>
+      </div>
+
+      <!-- SLIDE 7: Quick Reference -->
+      <div class="gm-slide" id="gm-slide-6">
+        <div class="gm-slide-icon">⚡</div>
+        <div class="gm-slide-title">Quick Start Checklist</div>
+        <div class="gm-slide-desc">Follow these steps to get an accurate sizing in under 5 minutes.</div>
+        <ul class="gm-steps">
+          <li class="gm-step"><div class="gm-step-num">1</div><div class="gm-step-body"><div class="gm-step-title">Select your volume mode</div><div class="gm-step-desc">⚖ Equal — if you haven't decided on location split yet. ↗ Split — if you have a defined routing strategy.</div></div></li>
+          <li class="gm-step"><div class="gm-step-num">2</div><div class="gm-step-body"><div class="gm-step-title">Deactivate out-of-scope locations</div><div class="gm-step-desc">In equal mode, click the ✓ on location cards to deactivate any country not being staffed. This prevents their volume from being counted.</div></div></li>
+          <li class="gm-step"><div class="gm-step-num">3</div><div class="gm-step-body"><div class="gm-step-title">Enter volume & AHT for each channel</div><div class="gm-step-desc">Use the strip at the top of each tab. Volume can be monthly or annual. AHT can be seconds (phone default) or minutes.</div></div></li>
+          <li class="gm-step"><div class="gm-step-num">4</div><div class="gm-step-body"><div class="gm-step-title">Set HOOP operating window</div><div class="gm-step-desc">Expand the HOOP panel and set operating days + hours. Add weekday/weekend splits if relevant. This unlocks unique headcount.</div></div></li>
+          <li class="gm-step"><div class="gm-step-num">5</div><div class="gm-step-body"><div class="gm-step-title">Review warnings</div><div class="gm-step-desc">Amber banners mean you need to take action — e.g. deselect locations, add splits, or hire to unique HC instead of base FTE.</div></div></li>
+          <li class="gm-step"><div class="gm-step-num">6</div><div class="gm-step-body"><div class="gm-step-title">Check Erlang C for SLA-based sizing</div><div class="gm-step-desc">If the contract has a defined service level (e.g. 80/20), switch to the Erlang C tab and verify your FTE against the queue model.</div></div></li>
+          <li class="gm-step"><div class="gm-step-num">7</div><div class="gm-step-body"><div class="gm-step-title">Export from Summary tab</div><div class="gm-step-desc">The 📊 Summary tab shows all channels and locations in one table. Screenshot or copy this for your RFP response.</div></div></li>
+        </ul>
+      </div>
+
+    </div><!-- /gm-body -->
+
+    <!-- Footer nav -->
+    <div class="gm-footer">
+      <div class="gm-counter" id="gm-counter">1 of 7</div>
+      <div class="gm-nav">
+        <button class="gm-btn gm-btn-prev" id="gm-btn-prev" onclick="guideNav(-1)">← Back</button>
+        <button class="gm-btn gm-btn-next" id="gm-btn-next" onclick="guideNav(1)">Next →</button>
+      </div>
+    </div>
+
+  </div><!-- /guide-modal -->
+</div><!-- /guide-overlay -->
 
 <!-- Home Warning Modal -->
 <div class="home-modal-overlay" id="homeModal">
@@ -478,6 +785,7 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
   <button class="tab-btn ch"        onclick="switchChan('chat')">💬 Chat <span class="tab-pip" id="pip-chat">—</span></button>
   <button class="tab-btn em"        onclick="switchChan('email')">✉️ Email <span class="tab-pip" id="pip-email">—</span></button>
   <button class="tab-btn"           onclick="switchChan('summary')">📊 Summary</button>
+  <button class="tab-btn ec"           onclick="switchChan('erlang')" id="tab-erlang"><span class="tab-ec-label">🔢 Erlang C</span> <span class="tab-pip" id="pip-erlang">—</span></button>
   <div class="tabbar-right" id="vol-mode-bar">
     <div class="vol-toggle">
       <button class="vt-btn active" id="vt-equal" onclick="setVolMode('equal')">⚖ Equal volumes</button>
@@ -487,6 +795,10 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
 </div>
 
 <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+
+<div class="eq-disclaimer" id="eq-disclaimer">
+  ⚠️ <span><strong>Equal volume mode:</strong> The same volume is being sent to all active locations. Please <strong>deselect any countries not in scope</strong> using the ✓ toggle on each location card — otherwise their FTE will be overcounted.</span>
+</div>
 
 <div class="ch-view active" id="view-phone">
   <div class="global-strip" id="gs-phone">
@@ -598,6 +910,7 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
       </div>
       <div class="hoop-split-warn" id="hoop-split-warn-phone" style="display:none">⚠ Weekday + Weekend should total 100%</div>
       <div class="hoop-split-warn" id="hoop-peak-warn-phone" style="display:none">⚠ Peak + Off-peak should total 100%</div>
+      <div class="hoop-247-nudge" id="hoop-247-nudge-phone">⚡ <span>You've selected <strong>24/7 coverage</strong> — please enter <strong>Weekday %</strong> and <strong>Weekend %</strong> distribution above so the tool can correctly calculate shift bands and unique headcount.</span></div>
     </div>
     <div class="hoop-divider"></div>
     <div class="hoop-section hoop-notes-section">
@@ -633,7 +946,7 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
       </div>
       <div class="gs-field">
         <label>Concurrency <span class="tt" data-t="Max simultaneous chats per agent">?</span></label>
-        <input class="gs-input" id="g-ch-conc" type="number" value="3" min="1" max="8" style="width:70px" oninput="onGlobal('chat','conc',this.value)">
+        <input class="gs-input" id="g-ch-conc" type="number" value="1.2" min="1" max="8" step="0.1" style="width:70px" oninput="onGlobal('chat','conc',this.value)">
         <span class="gs-unit">chats</span>
       </div>
     </div>
@@ -721,6 +1034,7 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
       </div>
       <div class="hoop-split-warn" id="hoop-split-warn-chat" style="display:none">⚠ Weekday + Weekend should total 100%</div>
       <div class="hoop-split-warn" id="hoop-peak-warn-chat" style="display:none">⚠ Peak + Off-peak should total 100%</div>
+      <div class="hoop-247-nudge" id="hoop-247-nudge-chat">⚡ <span>You've selected <strong>24/7 coverage</strong> — please enter <strong>Weekday %</strong> and <strong>Weekend %</strong> distribution above so the tool can correctly calculate shift bands and unique headcount.</span></div>
     </div>
     <div class="hoop-divider"></div>
     <div class="hoop-section hoop-notes-section">
@@ -849,6 +1163,7 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
       </div>
       <div class="hoop-split-warn" id="hoop-split-warn-email" style="display:none">⚠ Weekday + Weekend should total 100%</div>
       <div class="hoop-split-warn" id="hoop-peak-warn-email" style="display:none">⚠ Peak + Off-peak should total 100%</div>
+      <div class="hoop-247-nudge" id="hoop-247-nudge-email">⚡ <span>You've selected <strong>24/7 coverage</strong> — please enter <strong>Weekday %</strong> and <strong>Weekend %</strong> distribution above so the tool can correctly calculate shift bands and unique headcount.</span></div>
     </div>
     <div class="hoop-divider"></div>
     <div class="hoop-section hoop-notes-section">
@@ -871,6 +1186,53 @@ body{font-family:var(--font);background:var(--page);color:var(--ink);min-height:
     </tr></thead><tbody id="sv-tbody"></tbody></table>
   </div>
 </div>
+
+<div class="summary-view" id="view-erlang" style="padding:0;overflow-y:auto">
+  <div class="global-strip" id="gs-erlang" style="flex-wrap:wrap;gap:14px">
+    <span class="gs-label">🔢 Erlang C Inputs</span>
+    <div class="gs-fields" style="flex-wrap:wrap;gap:14px">
+      <div class="gs-field">
+        <label>Channel</label>
+        <select class="vol-period-sel" id="erlang-channel" onchange="onErlangChannel(this.value)" style="font-size:12px;padding:5px 24px 5px 9px">
+          <option value="phone">📞 Phone</option>
+          <option value="chat">💬 Chat</option>
+          <option value="email">✉️ Email</option>
+        </select>
+      </div>
+      <div class="gs-field">
+        <label>Interval</label>
+        <select class="vol-period-sel" id="erlang-interval" onchange="calcErlang()" style="font-size:12px;padding:5px 24px 5px 9px">
+          <option value="30">30 min</option>
+          <option value="60" selected>60 min</option>
+        </select>
+      </div>
+      <div class="gs-field">
+        <label>SL Target</label>
+        <input class="gs-input" id="erlang-sl" type="number" value="80" min="1" max="99" style="width:72px" oninput="calcErlang()">
+        <span class="gs-unit">% in</span>
+        <input class="gs-input" id="erlang-tt" type="number" value="20" min="1" style="width:72px" oninput="calcErlang()">
+        <span class="gs-unit">secs</span>
+      </div>
+      <div class="gs-field">
+        <label>Occ Cap <span class="tt" data-t="Occupancy is calculated by Erlang C (A/N). This cap is a safety ceiling — if the model's natural occupancy exceeds this, more agents are added until it drops below. Lower = more agents but less burnout risk.">?</span></label>
+        <input class="gs-input" id="erlang-maxocc" type="number" value="80" min="50" max="99" style="width:72px" oninput="calcErlang()">
+        <span class="gs-unit">% max</span>
+      </div>
+    </div>
+    <span class="gs-info" id="gs-erlang-hint" style="width:100%"></span>
+  </div>
+  <div style="padding:20px 24px;flex:1">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+      <div style="font-size:13px;font-weight:700;color:var(--erlang-c)">Erlang C — Agent Requirements</div>
+      <div style="font-size:11px;color:var(--erlang-c);opacity:.65;font-style:italic">Queue-based staffing model with service level constraint</div>
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap" id="erlang-cards"></div>
+    <div style="margin-top:20px;padding:14px 18px;border-radius:10px;font-size:11px;line-height:1.65" class="ec-info-box">
+      <strong style="color:var(--erlang-c)">ℹ️ About Erlang C:</strong> <span style="color:var(--ink2)">Unlike simple workload sizing, Erlang C models random call arrivals and queue wait times. It calculates the minimum agents needed so that <em>X%</em> of contacts are answered within <em>Y seconds</em>. <strong>Occupancy (A/N) is a calculated output</strong> — the model adds agents until both the SL target and the occupancy cap are satisfied. Raising the cap allows fewer agents but higher burnout risk; lowering it forces more agents. Results are typically 10–30% higher than workload FTE. <strong>Note:</strong> Erlang C applies to Phone and Chat (queued channels). Email uses a workload + SL-buffer approach.</span>
+    </div>
+  </div>
+</div>
+
 </div>
 
 <div class="footer">
@@ -945,7 +1307,7 @@ const ACTIVE_LOCS = Array(N_LOCS).fill(true);
 // Global inputs (shared across all locations in equal mode)
 const GLOBAL = {
   phone:  {vol:0, aht:0},
-  chat:   {vol:0, aht:0, conc:3},
+  chat:   {vol:0, aht:0, conc:1.2},
   email:  {vol:0, aht:0, pct:85, backlog:0},
 };
 // Per-location split percentages
@@ -1033,7 +1395,7 @@ function calcPhone(li){
 function calcChat(li){
   const vol    = getVol('chat', li);
   const ahtSec = getAhtSec('chat');
-  const conc   = GLOBAL.chat.conc || 3;
+  const conc   = GLOBAL.chat.conc || 1.2;
   const ftehrs = getFteHrs(li);
   const util   = LOC[li].util / 100;
   const avail  = LOC[li].occ  / 100;
@@ -1070,7 +1432,7 @@ function frow(label, rightHtml, tip=''){
 function shrinkBlock(li){
   const l=LOC[li], tot=l.util+l.occ;
   return `<div class="shrink-block">
-    <div class="shrink-block-title">Shrinkage</div>
+    <div class="shrink-block-title">Shrinkage <span style="font-weight:400;color:var(--ink4);font-size:9px;letter-spacing:0;text-transform:none">— click % to edit</span></div>
     <div class="shrink-row">
       <span class="shrink-label util">Utilisation <span class="tt" data-t="In-office: training, coaching, meetings">?</span></span>
       <div class="shrink-input-wrap">
@@ -1111,6 +1473,7 @@ function resultBlock(ch, li){
         <div style="font-size:10px;color:var(--k-muted);font-weight:600">peak shift FTE</div>
       </div>
       <div class="hoop-fte-detail" id="ir-hfte-detail-${pfx}-${li}"></div>
+      <div class="hc-warn-banner" id="ir-hc-warn-${pfx}-${li}"></div>
     </div>
   </div>`;
 }
@@ -1242,14 +1605,24 @@ function renderResults(){
       const hoopRow    = g(`ir-hfte-row-${pfx}-${i}`);
       const hoopValEl  = g(`ir-hfte-${pfx}-${i}`);
       const hoopDetEl  = g(`ir-hfte-detail-${pfx}-${i}`);
+      const hoopWarnEl = g(`ir-hc-warn-${pfx}-${i}`);
       const hoopResult = calcHoopFte(ch, i, r);
       if(hoopRow){
         if(hoopResult && r.fte){
           hoopRow.style.display = 'block';
           if(hoopResult.hoopOnly){
-            // No splits — just show base FTE with context
+            // No volume splits — show shift rotation result
             if(hoopValEl) hoopValEl.textContent = hoopResult.totalFte;
             if(hoopDetEl) hoopDetEl.textContent = hoopResult.note;
+            // Warn if rotation multiplier pushed HC above base FTE
+            if(hoopWarnEl){
+              if(hoopResult.rotationMultiplier > 1){
+                hoopWarnEl.innerHTML = `⚠️ <strong>Use unique headcount (${hoopResult.totalFte} FTE)</strong> — your ${hoopResult.rotationMultiplier > 0 ? 'operating window requires ' + hoopResult.rotationMultiplier + ' shift rotations' : 'coverage window'}, so you need more staff than the base workload FTE (${r.fte}) suggests. Hire to the unique headcount figure.`;
+                hoopWarnEl.classList.add('show');
+              } else {
+                hoopWarnEl.classList.remove('show');
+              }
+            }
           } else {
             // Full band breakdown
             const peakBand = hoopResult.bands.find(b=>!b.warn);
@@ -1263,9 +1636,19 @@ function renderResults(){
               lines.push(`Total unique headcount: ${hoopResult.totalFte} FTE`);
               hoopDetEl.innerHTML = lines.join('<br>');
             }
+            // ── Change 1: Warn if FTE < unique headcount ──
+            if(hoopWarnEl){
+              if(hoopResult.totalFte > r.fte){
+                hoopWarnEl.innerHTML = `⚠️ <strong>Use unique headcount (${hoopResult.totalFte} FTE)</strong> — the HOOP band rostering requires more total staff than the base FTE (${r.fte}) due to multi-shift coverage. Hire to the unique headcount figure.`;
+                hoopWarnEl.classList.add('show');
+              } else {
+                hoopWarnEl.classList.remove('show');
+              }
+            }
           }
         } else {
           hoopRow.style.display = 'none';
+          if(hoopWarnEl) hoopWarnEl.classList.remove('show');
         }
       }
     }
@@ -1481,20 +1864,24 @@ function renderSummary(){
 ════════════════════════════════════════════════ */
 function switchChan(ch){
   CUR_CHAN=ch;
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active','ph','ch','em'));
-  const cls={phone:'ph',chat:'ch',email:'em'};
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active','ph','ch','em','ec'));
+  const cls={phone:'ph',chat:'ch',email:'em',erlang:'ec'};
   const btn=document.querySelector(`.tab-btn[onclick*="'${ch}'"]`);
   if(btn){btn.classList.add('active');if(cls[ch])btn.classList.add(cls[ch]);}
   document.querySelectorAll('.ch-view,.summary-view').forEach(v=>v.classList.remove('active'));
   const view=g('view-'+ch); if(view) view.classList.add('active');
   const vmb=g('vol-mode-bar'); if(vmb) vmb.style.display=['phone','chat','email'].includes(ch)?'flex':'none';
   if(ch==='summary') renderSummary();
+  if(ch==='erlang')  calcErlang();
 }
 
 function setVolMode(mode){
   VOL_MODE=mode;
   g('vt-equal').classList.toggle('active',mode==='equal');
   g('vt-split').classList.toggle('active',mode==='split');
+  // Show equal-mode disclaimer
+  const disc = g('eq-disclaimer');
+  if(disc) disc.classList.toggle('show', mode==='equal');
   // Show / hide split % strips
   ['phone','chat','email'].forEach(ch=>{
     const sps=g('sps-'+ch); if(sps) sps.classList.toggle('show',mode==='split');
@@ -1528,6 +1915,8 @@ function setHoop247(ch){
   if(panel) panel.style.display = 'flex';
   if(btn)   btn.classList.add('open');
   onHoopChange(ch);
+  // Show the split nudge unless splits are already entered
+  update247Nudge(ch);
 }
 
 /* Clear all HOOP fields for a channel */
@@ -1558,8 +1947,24 @@ function clearHoop(ch){
   onHoopChange(ch);
 }
 
+function update247Nudge(ch){
+  const nudgeEl = g(`hoop-247-nudge-${ch}`);
+  if(!nudgeEl) return;
+  const open  = g(`hoop-open-${ch}`)?.value;
+  const close = g(`hoop-close-${ch}`)?.value;
+  const is247 = open === '00:00' && close === '00:00';
+  const days  = Array.from(document.querySelectorAll(`.hoop-day-cb[data-ch="${ch}"]`)).filter(cb=>cb.checked);
+  const hasWeekend = days.some(cb=>['Sat','Sun'].includes(cb.dataset.day));
+  const wkday = parseFloat(g(`hoop-wkday-${ch}`)?.value) || 0;
+  const wkend = parseFloat(g(`hoop-wkend-${ch}`)?.value) || 0;
+  const splitsEntered = wkday > 0 || wkend > 0;
+  // Show nudge if: 24h coverage OR has weekend days, AND no splits yet entered
+  nudgeEl.classList.toggle('show', (is247 || hasWeekend) && !splitsEntered);
+}
+
 function onHoopChange(ch){
   updateHoopSummary(ch);
+  update247Nudge(ch);
   calcAll();
 }
 
@@ -1572,6 +1977,7 @@ function onHoopSplit(ch){
   const pkWarn = g(`hoop-peak-warn-${ch}`);
   if(warnEl) warnEl.style.display = (wkday||wkend) && Math.round(wkday+wkend)!==100 ? 'flex':'none';
   if(pkWarn) pkWarn.style.display = (peak||offpeak) && Math.round(peak+offpeak)!==100 ? 'flex':'none';
+  update247Nudge(ch);
   onHoopChange(ch);
 }
 
@@ -1646,19 +2052,28 @@ function calcHoopFte(ch, li, baseResult){
   const ftehrs = getFteHrs(li);
   const util   = LOC[li].util / 100;
   const avail  = LOC[li].occ  / 100;
-  const conc   = ch==='chat' ? (GLOBAL.chat.conc||3) : 1;
+  const conc   = ch==='chat' ? (GLOBAL.chat.conc||1.2) : 1;
 
   const { wkdayPct, wkendPct, peakPct, offpeakPct, hasSplits,
           weekdayDays, weekendDays, dailyOpHrs, daysPerWeek } = hoop;
 
-  // ── No volume splits — just show context, return base FTE unchanged ──
+  // ── No volume splits — apply shift-rotation multiplier if window > shift ──
   if(!hasSplits){
+    const countryShiftHrs = CTRY_PROFILE[LOC[li].country]?.shiftHrs || 8;
+    const shiftRotations  = dailyOpHrs / countryShiftHrs;
+    const rotationMultiplier = Math.ceil(shiftRotations);
+    const adjustedFte = baseResult.fte * rotationMultiplier;
+    const needsMultiplier = rotationMultiplier > 1;
     return {
       bands: [],
-      totalFte: baseResult.fte,
+      totalFte: adjustedFte,
       peakFte: baseResult.fte,
-      note: `${daysPerWeek}d/wk · ${dailyOpHrs===24?'24h':dailyOpHrs+'h'}/day · base FTE applies`,
-      hoopOnly: true
+      note: needsMultiplier
+        ? `${daysPerWeek}d/wk · ${dailyOpHrs}h/day · ${dailyOpHrs}h ÷ ${countryShiftHrs}h shift = ${rotationMultiplier} rotations → ${adjustedFte} unique FTE`
+        : `${daysPerWeek}d/wk · ${dailyOpHrs===24?'24h':dailyOpHrs+'h'}/day · base FTE applies`,
+      hoopOnly: true,
+      rotationMultiplier,
+      adjustedFte
     };
   }
 
@@ -1760,6 +2175,269 @@ function fmtTime(t){
 }
 
 /* ════════════════════════════════════════════════
+   ERLANG C ENGINE
+   ─────────────────────────────────────────────
+   Formula:
+   • Traffic intensity A = (calls/interval × AHT_sec) / interval_sec
+   • Erlang C probability P(wait) = ErlangC(N, A)
+   • Service Level = 1 − P(wait) × e^(−(N−A)×T/AHT)
+   • Iterate N upward until SL target met OR occupancy ≤ maxOcc
+════════════════════════════════════════════════ */
+
+let ERLANG_CHAN = 'phone'; // currently selected channel in Erlang view
+
+function onErlangChannel(ch){
+  ERLANG_CHAN = ch;
+  calcErlang();
+}
+
+/* Erlang C probability: P(all agents busy) */
+function erlangC(N, A){
+  if(N <= 0 || A <= 0) return 0;
+  if(A >= N) return 1; // unstable — traffic exceeds capacity
+  // Compute using iterative method to avoid factorial overflow
+  // P(0) via Erlang B recursion then convert to Erlang C
+  let erlangB = 1.0;
+  for(let i = 1; i <= N; i++){
+    erlangB = (A * erlangB) / (i + A * erlangB);
+  }
+  // Erlang C = (N * erlangB) / (N - A * (1 - erlangB))
+  const denom = N - A * (1 - erlangB);
+  if(denom <= 0) return 1;
+  return (N * erlangB) / denom;
+}
+
+/* Service level for N agents, traffic A, target time T secs, AHT secs */
+function serviceLevel(N, A, T, ahtSec){
+  if(N <= 0 || A <= 0 || ahtSec <= 0) return 0;
+  if(A >= N) return 0;
+  const Pc = erlangC(N, A);
+  return 1 - Pc * Math.exp(-(N - A) * T / ahtSec);
+}
+
+/* Find minimum N agents to meet SL target, capped at maxOcc */
+function erlangAgents(callsPerInterval, ahtSec, intervalSec, slTarget, tTarget, maxOcc){
+  if(!callsPerInterval || !ahtSec) return { agents:0, traffic:0, sl:0, occ:0, pw:0 };
+  const A = (callsPerInterval * ahtSec) / intervalSec; // Erlangs (traffic intensity)
+  const minN = Math.max(Math.ceil(A) + 1, 1); // must exceed traffic
+  let N = minN;
+  let sl = 0;
+  for(let iter = 0; iter < 500; iter++){
+    sl = serviceLevel(N, A, tTarget, ahtSec);
+    const occ = A / N;
+    if(sl >= slTarget / 100 && occ <= maxOcc / 100) break;
+    N++;
+  }
+  const finalOcc = A / N;
+  const Pc = erlangC(N, A);
+  return {
+    agents: N,
+    traffic: A,
+    sl: serviceLevel(N, A, tTarget, ahtSec),
+    occ: finalOcc,
+    pw: Pc // probability of waiting
+  };
+}
+
+/* Scale per-interval agents to monthly FTE, applying shrinkage */
+function intervalAgentsToFte(agents, util, avail, ftehrs, intervalMins, hoursPerDay){
+  // agents = concurrent agents needed per interval
+  // Scale to monthly: agents are needed throughout operating hours
+  // FTE = agents × (hoursPerDay × workingDays) / ftehrs adjusted for shrinkage
+  const workingDaysPerMonth = modays();
+  const grossHoursPerMonth  = agents * hoursPerDay * workingDaysPerMonth;
+  const attendanceHrs = (grossHoursPerMonth / (1 - util)) / (1 - avail);
+  return Math.ceil(attendanceHrs / ftehrs);
+}
+
+function calcErlang(){
+  const ch          = ERLANG_CHAN || 'phone';
+  const intervalMin = parseInt(g('erlang-interval')?.value) || 60;
+  const slTarget    = parseFloat(g('erlang-sl')?.value)     || 80;
+  const tTarget     = parseFloat(g('erlang-tt')?.value)     || 20;
+  const maxOcc      = parseFloat(g('erlang-maxocc')?.value) || 85;
+  const intervalSec = intervalMin * 60;
+
+  const ahtSec = getAhtSec(ch);
+  const monthlyVol = VOL_PERIOD[ch] === 'annual' ? GLOBAL[ch].vol / 12 : GLOBAL[ch].vol;
+
+  // Hint text
+  const hintEl = g('gs-erlang-hint');
+  if(hintEl){
+    if(!monthlyVol || !ahtSec){
+      hintEl.textContent = 'Enter volume and AHT in the channel tab first, then come back here.';
+    } else {
+      const dailyVol = Math.round(monthlyVol / modays());
+      const volPerInterval = dailyVol / (24 / intervalMin);
+      hintEl.textContent = `Using ${ch} inputs: ${monthlyVol.toLocaleString()} contacts/mo · AHT ${(ahtSec/60).toFixed(1)} min · ~${volPerInterval.toFixed(1)} contacts per ${intervalMin}-min interval`;
+    }
+  }
+
+  const container = g('erlang-cards');
+  if(!container) return;
+
+  // Determine HOOP operating hours for each location (default 9h/day)
+  function getOpHrs(ch){
+    const hoop = getHoopData(ch);
+    return hoop ? hoop.dailyOpHrs : 9;
+  }
+  const opHrsPerDay = getOpHrs(ch);
+
+  const concurrency = (ch === 'chat') ? (GLOBAL.chat.conc || 3) : 1;
+
+  const cards = Array.from({length: N_LOCS}, (_, li) => {
+    const loc       = LOC[li];
+    const vol       = getVol(ch, li);
+    const util      = loc.util / 100;
+    const avail     = loc.occ  / 100;
+    const ftehrs    = getFteHrs(li);
+    const cn        = li + 1;
+
+    if(!vol || !ahtSec){
+      return `<div class="ec-card c${cn}">
+        <div class="ec-head">
+          <div class="ec-loc-name">${CTRY_FLAG[loc.country]} ${loc.name}</div>
+          <div class="ec-loc-country">${CTRY_NAME[loc.country]}</div>
+        </div>
+        <div class="ec-body" style="color:var(--ink4);font-size:11px;padding:16px;text-align:center">No volume / AHT entered</div>
+      </div>`;
+    }
+
+    // Calls per interval (distribute monthly vol across operating intervals)
+    const intervalsPerDay    = opHrsPerDay / (intervalMin / 60);
+    const workingDays        = modays();
+    const totalIntervals     = intervalsPerDay * workingDays;
+    const callsPerInterval   = vol / totalIntervals;
+
+    let result;
+    if(ch === 'email'){
+      // Email doesn't queue — use workload formula with SL buffer
+      const wl = RESULTS.email[li];
+      const slBuffer = 1 + (1 - slTarget / 100) * 0.5; // conservative buffer
+      const erlangAgentCount = Math.ceil((wl.fte || 0) * slBuffer);
+      result = {
+        agents: erlangAgentCount,
+        traffic: (callsPerInterval * ahtSec) / intervalSec,
+        sl: slTarget / 100,
+        occ: Math.min((wl.workloadHrs||0) / ((wl.attendanceHrs||1) * (1-util) * (1-avail)), maxOcc/100),
+        pw: 0
+      };
+    } else {
+      result = erlangAgents(callsPerInterval, ahtSec, intervalSec, slTarget, tTarget, maxOcc);
+    }
+
+    // Scale concurrent agents → monthly FTE
+    let fte = intervalAgentsToFte(result.agents, util, avail, ftehrs, intervalMin, opHrsPerDay);
+    if(ch === 'chat') fte = Math.ceil(fte / concurrency);
+    fte = Math.max(fte, 1);
+
+    // Compare to workload FTE
+    const workloadFte = RESULTS[ch][li].fte || 0;
+    const diff = fte - workloadFte;
+    const diffTxt = workloadFte
+      ? (diff > 0 ? `+${diff} vs workload` : diff < 0 ? `${diff} vs workload` : `= workload`)
+      : '';
+
+    const slPct  = Math.round(result.sl * 100);
+    const occPct = Math.round(result.occ * 100);
+    const pwPct  = Math.round(result.pw  * 100);
+
+    const slClass  = slPct >= slTarget - 1 ? 'ok' : slPct >= slTarget - 5 ? 'warn' : 'err';
+    const occClass = occPct <= maxOcc ? 'safe' : 'warn';
+
+    return `<div class="ec-card c${cn}">
+      <div class="ec-head">
+        <div class="ec-loc-name">${CTRY_FLAG[loc.country]} ${loc.name}</div>
+        <div class="ec-loc-country">${CTRY_NAME[loc.country]}</div>
+      </div>
+      <div class="ec-body">
+        <div class="ec-row"><span class="ec-lbl">Traffic intensity</span><span class="ec-val">${result.traffic.toFixed(2)} Erl</span></div>
+        <div class="ec-row"><span class="ec-lbl">Agents / interval</span><span class="ec-val">${result.agents}</span></div>
+        <div class="ec-row"><span class="ec-lbl">Occ (calculated)</span><span class="ec-val"><span class="ec-occ-pill ${occClass}">${occPct}%</span></span></div>
+        ${ch !== 'email' ? `<div class="ec-row"><span class="ec-lbl">P(wait)</span><span class="ec-val">${pwPct}%</span></div>` : ''}
+        <div class="ec-divider"></div>
+        <div class="ec-fte-box">
+          <div class="ec-fte-box-lbl">🔢 Erlang C FTE</div>
+          <div class="ec-fte-box-val">${fte}</div>
+          <div class="ec-fte-box-sub">
+            <span class="ec-sl-badge ${slClass}">✓ SL ~${slPct}% in ${tTarget}s</span>
+            ${diffTxt ? `<div class="ec-vs-workload">${diffTxt} (workload: ${workloadFte})</div>` : ''}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  container.innerHTML = cards.join('');
+
+  // Update pip
+  const totErlang = Array.from({length:N_LOCS},(_,li)=>{
+    const vol = getVol(ch, li);
+    if(!vol || !ahtSec) return 0;
+    const opHrsPerDay  = getOpHrs(ch);
+    const intervalsPerDay  = opHrsPerDay / (intervalMin / 60);
+    const callsPerInterval = vol / (intervalsPerDay * modays());
+    if(ch === 'email'){
+      const wl = RESULTS.email[li];
+      const slBuffer = 1 + (1 - slTarget / 100) * 0.5;
+      return Math.max(Math.ceil((wl.fte||0) * slBuffer), 1);
+    }
+    const r = erlangAgents(callsPerInterval, ahtSec, intervalSec, slTarget, tTarget, maxOcc);
+    let fte = intervalAgentsToFte(r.agents, LOC[li].util/100, LOC[li].occ/100, getFteHrs(li), intervalMin, opHrsPerDay);
+    if(ch === 'chat') fte = Math.ceil(fte / (GLOBAL.chat.conc||1.2));
+    return Math.max(fte, 1);
+  }).reduce((a,b)=>a+b,0);
+  st('pip-erlang', totErlang || '—');
+}
+
+/* ════════════════════════════════════════════════
+   HOW TO USE GUIDE
+════════════════════════════════════════════════ */
+const GUIDE_TOTAL = 7;
+let guidePage = 0;
+
+function openGuide(startPage){
+  guidePage = startPage || 0;
+  renderGuidePage();
+  g('guideOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeGuide(){
+  g('guideOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function onGuideOverlayClick(e){
+  if(e.target === g('guideOverlay')) closeGuide();
+}
+function guideNav(dir){
+  guidePage = Math.max(0, Math.min(GUIDE_TOTAL - 1, guidePage + dir));
+  renderGuidePage();
+}
+function renderGuidePage(){
+  // Slides
+  document.querySelectorAll('.gm-slide').forEach((s,i) => s.classList.toggle('active', i === guidePage));
+  // Dots
+  const dotsEl = g('gm-dots');
+  if(dotsEl){
+    dotsEl.innerHTML = Array.from({length: GUIDE_TOTAL}, (_,i) =>
+      `<div class="gm-dot${i===guidePage?' active':''}" onclick="guidePage=${i};renderGuidePage()"></div>`
+    ).join('');
+  }
+  // Counter
+  st('gm-counter', `${guidePage + 1} of ${GUIDE_TOTAL}`);
+  // Buttons
+  const prevBtn = g('gm-btn-prev');
+  const nextBtn = g('gm-btn-next');
+  if(prevBtn) prevBtn.style.visibility = guidePage === 0 ? 'hidden' : 'visible';
+  if(nextBtn){
+    const isLast = guidePage === GUIDE_TOTAL - 1;
+    nextBtn.textContent = isLast ? '✓ Done' : 'Next →';
+    nextBtn.className   = isLast ? 'gm-btn gm-btn-done' : 'gm-btn gm-btn-next';
+    nextBtn.onclick     = isLast ? closeGuide : () => guideNav(1);
+  }
+}
+
+/* ════════════════════════════════════════════════
    HOME MODAL
 ════════════════════════════════════════════════ */
 function showHomeModal(){
@@ -1787,6 +2465,9 @@ document.getElementById('homeModal').addEventListener('click', function(e){
 buildAllRows();
 updateTopbarShrink();
 calcAll();
+// Show equal-mode disclaimer by default (equal is the default mode)
+const _disc = g('eq-disclaimer');
+if(_disc) _disc.classList.add('show');
 </script>
 </body>
 </html>
